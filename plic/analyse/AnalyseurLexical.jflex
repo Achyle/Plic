@@ -30,30 +30,32 @@ import java_cup.runtime.*;
 %state Commentaire
 entier = [0-9]+
 bool = vrai | faux
-classe = classe
 idf = [a-zA-Z][a-zA-Z0-9]*
-fin = fin 
 statut = publique | privee
 type = entier | double | boolean
-lire = lire 
-ecrire = ecrire
 cstchaine = \"[^;]*\"
 LineTerminator= \r|\n|\r\n
 
 %%
 
-<YYINITIAL> {entier} 	{ return symbol(CodesLexicaux.CSTE_ENT, yytext()); }
-<YYINITIAL> {bool} 		{ return symbol(CodesLexicaux.BOOL, yytext()); }
-<YYINITIAL> "+" 	 	{ return symbol(CodesLexicaux.PLUS); }
-<YYINITIAL> "-" 	 	{ return symbol(CodesLexicaux.MOINS); }
-<YYINITIAL> "*" 	 	{ return symbol(CodesLexicaux.FOIS); }
-<YYINITIAL> "/"			{ return symbol(CodesLexicaux.DIVISER); }
-<YYINITIAL> "<" 	 	{ return symbol(CodesLexicaux.INF); }
-<YYINITIAL> ">" 	 	{ return symbol(CodesLexicaux.SUP); }
-<YYINITIAL> "==" 	 	{ return symbol(CodesLexicaux.EGALE); }
-<YYINITIAL> "!=" 		{ return symbol(CodesLexicaux.DIFFERENT); }
-<YYINITIAL> "(" 		{ return symbol(CodesLexicaux.PARENTHESE_OUVERT); }
-<YYINITIAL> ")" 		{ return symbol(CodesLexicaux.PARENTHESE_FERMER); }
+<YYINITIAL> "classe" 	{ return symbol(CodesLexicaux.classe); }
+<YYINITIAL> "fin" 		{ return symbol(CodesLexicaux.fin); }
+<YYINITIAL> {entier} 	{ return symbol(CodesLexicaux.cste_ent, yytext()); }
+<YYINITIAL> {bool} 		{ return symbol(CodesLexicaux.bool, yytext()); }
+<YYINITIAL> {idf} 		{ return symbol(CodesLexicaux.idf, yytext()); }
+<YYINITIAL> "+" 	 	{ return symbol(CodesLexicaux.plus); }
+<YYINITIAL> "-" 	 	{ return symbol(CodesLexicaux.moins); }
+<YYINITIAL> "*" 	 	{ return symbol(CodesLexicaux.fois); }
+<YYINITIAL> "/"			{ return symbol(CodesLexicaux.diviser); }
+<YYINITIAL> "<" 	 	{ return symbol(CodesLexicaux.inf); }
+<YYINITIAL> ">" 	 	{ return symbol(CodesLexicaux.sup); }
+<YYINITIAL> "==" 	 	{ return symbol(CodesLexicaux.egale); }
+<YYINITIAL> "!=" 		{ return symbol(CodesLexicaux.different); }
+<YYINITIAL> "(" 		{ return symbol(CodesLexicaux.parenthese_ouvert); }
+<YYINITIAL> ")" 		{ return symbol(CodesLexicaux.parenthese_fermer); }
+<YYINITIAL> ";" 		{ return symbol(CodesLexicaux.pointvirgule); }
+
+
 <YYINITIAL>	 "//"		{ yybegin(Commentaire) ; }
 <Commentaire>{LineTerminator}	 { yybegin(YYINITIAL) ; }
 . 					 	{}

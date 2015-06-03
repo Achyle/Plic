@@ -8,35 +8,43 @@ package plic.analyse;
 /** CUP generated class containing symbol constants. */
 public class CodesLexicaux {
   /* terminals */
-  public static final int CSTE_ENT = 2;
-  public static final int BOOL = 13;
-  public static final int EGALE = 11;
-  public static final int DIVISER = 8;
-  public static final int DIFFERENT = 12;
+  public static final int parenthese_ouvert = 3;
+  public static final int pointvirgule = 16;
+  public static final int sup = 10;
+  public static final int cste_ent = 2;
+  public static final int inf = 9;
+  public static final int parenthese_fermer = 4;
+  public static final int bool = 13;
   public static final int EOF = 0;
-  public static final int PLUS = 5;
-  public static final int INF = 9;
+  public static final int different = 12;
   public static final int error = 1;
-  public static final int PARENTHESE_OUVERT = 3;
-  public static final int PARENTHESE_FERMER = 4;
-  public static final int MOINS = 6;
-  public static final int FOIS = 7;
-  public static final int SUP = 10;
+  public static final int classe = 14;
+  public static final int plus = 5;
+  public static final int fin = 15;
+  public static final int moins = 6;
+  public static final int fois = 7;
+  public static final int diviser = 8;
+  public static final int egale = 11;
+  public static final int idf = 17;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
-  "CSTE_ENT",
-  "PARENTHESE_OUVERT",
-  "PARENTHESE_FERMER",
-  "PLUS",
-  "MOINS",
-  "FOIS",
-  "DIVISER",
-  "INF",
-  "SUP",
-  "EGALE",
-  "DIFFERENT",
-  "BOOL"
+  "cste_ent",
+  "parenthese_ouvert",
+  "parenthese_fermer",
+  "plus",
+  "moins",
+  "fois",
+  "diviser",
+  "inf",
+  "sup",
+  "egale",
+  "different",
+  "bool",
+  "classe",
+  "fin",
+  "pointvirgule",
+  "idf"
   };
 }
 

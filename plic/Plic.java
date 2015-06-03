@@ -38,14 +38,6 @@ public class Plic {
 			String res = arbre.generer() ;
 			pw.write(res+"\n");
 			
-			pw.write("	# retourne le resultat\n");
-			pw.write("	li $v0, 4\n");
-			pw.write("	la $a0, stri\n");
-			pw.write("	syscall\n");
-			pw.write("	li $v0, 1\n");
-			pw.write("	lw $a0, 4($sp)\n");
-			pw.write("	syscall\n");
-			
 			pw.close();
 			 
 			System.out.println("COMPILATION OK\n");

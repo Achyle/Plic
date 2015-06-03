@@ -1,7 +1,11 @@
 package plic.analyse;
 
 import plic.arbre.ArbreAbstrait;
+import plic.arbre.Classe;
+import plic.arbre.Declaration;
+import plic.arbre.ListeDeclaration;
 import plic.arbre.expression.Different;
+import plic.arbre.expression.Division;
 import plic.arbre.expression.Egale;
 import plic.arbre.expression.Expression;
 import plic.arbre.expression.Inferieur;
@@ -10,7 +14,6 @@ import plic.arbre.expression.Somme;
 import plic.arbre.expression.Soustraction;
 import plic.arbre.expression.Superieur;
 import plic.arbre.expression.Unaire;
-import plic.arbre.expression.Division;
 
 action code {: 
 			:}; 
@@ -39,48 +42,76 @@ parser code {:
     }
 :};
 
-terminal String CSTE_ENT, PARENTHESE_OUVERT, PARENTHESE_FERMER, PLUS, MOINS, FOIS, DIVISER, INF, SUP, EGALE, DIFFERENT, BOOL;
+terminal String cste_ent, parenthese_ouvert, parenthese_fermer, plus, moins, fois, diviser, inf, sup, egale;
+terminal String different, bool, classe, fin, pointvirgule, idf;
 
 non terminal ArbreAbstrait SYSTEME;
-non terminal ArbreAbstrait LEXP;
+non terminal Classe CLASSE;
+non terminal ListeDeclaration LDECL;
+non terminal Declaration DECLARATION;
 non terminal Expression EXP;
 
-precedence left BOOL;
-precedence left INF, SUP, EGALE, DIFFERENT;
-precedence left PLUS, MOINS;
-precedence left FOIS, DIVISER;
+precedence left bool;
+precedence left inf, sup, egale, different;
+precedence left plus, moins;
+precedence left fois, diviser;
 
 start with SYSTEME;
 
-SYSTEME	::= LEXP:lx
-	{: RESULT = lx; :};
+SYSTEME	::= CLASSE:c
+	{: 	System.out.println("systeme"); 
+		RESULT = new ArbreAbstrait(c); :};
+	
+CLASSE ::= classe idf:i LDECL:l fin
+	{: System.out.println("classe");
+	   RESULT = new Classe(l,i); :};
 
-LEXP ::= EXP:e
-	   {: ArbreAbstrait arbre = new ArbreAbstrait();
-	      arbre.ajouterAction(e);
-	      RESULT = arbre; :};
+LDECL ::= LDECL:l DECLARATION:d
+	{: 	
+		System.out.println("liste declaration add");
+		l.ajouterDeclaration(d);
+		RESULT = l; :}
+	| DECLARATION:d
+	{: 	
+		System.out.println("liste declaration new");
+		ListeDeclaration l = new ListeDeclaration(); 
+		l.ajouterDeclaration(d);
+		RESULT = l; :};
+	
+DECLARATION ::= EXP:e pointvirgule
+	{: RESULT = new Declaration(); :};
 
-EXP ::= CSTE_ENT:cste
+EXP ::= cste_ent:cste
 	  	{: RESULT = new Unaire(Integer.parseInt(""+cste),false); :}
-	| PARENTHESE_OUVERT EXP:e PARENTHESE_FERMER
+	| parenthese_ouvert EXP:e parenthese_fermer
 	  {: RESULT = e; :}
-	| MOINS EXP:e
+	
+	| moins EXP:e
 	  {: RESULT = new Multiplication(new Unaire(-1,false),e); :}
-	| EXP:e1 PLUS EXP:e2
+	
+	| EXP:e1 plus EXP:e2
 	  {: RESULT = new Somme(e1,e2); :}
-	| EXP:e1 MOINS EXP:e2
+	
+	| EXP:e1 moins EXP:e2
 	  {: RESULT = new Soustraction(e1,e2); :}
-	| EXP:e1 FOIS EXP:e2
+	
+	| EXP:e1 fois EXP:e2
 	  {: RESULT = new Multiplication(e1,e2); :}
-	| EXP:e1 DIVISER EXP:e2
+	
+	| EXP:e1 diviser EXP:e2
 	  {: RESULT = new Division(e1,e2); :}
-	| EXP:e1 INF EXP:e2
+	
+	| EXP:e1 inf EXP:e2
 	  {: RESULT=new Inferieur(e1,e2); :}
-	| EXP:e1 SUP EXP:e2
+	
+	| EXP:e1 sup EXP:e2
 	  {: RESULT=new Superieur(e1,e2); :}
-	| EXP:e1 EGALE EXP:e2
+	
+	| EXP:e1 egale EXP:e2
 	  {: RESULT=new Egale(e1,e2); :}
-	| EXP:e1 DIFFERENT EXP:e2
+	
+	| EXP:e1 different EXP:e2
 	  {: RESULT=new Different(e1,e2); :}
-	| BOOL:b
+	
+	| bool:b
 	  {: RESULT=new Unaire(b=="vrai"?1:0,true); :};

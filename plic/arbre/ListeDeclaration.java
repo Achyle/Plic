@@ -1,8 +1,9 @@
 package plic.arbre;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class ListeDeclaration {
+public class ListeDeclaration implements Iterable<Declaration>{
 	
 	ArrayList<Declaration> listeDeclaration;
 	
@@ -22,5 +23,10 @@ public class ListeDeclaration {
 		for(Declaration decl : listeDeclaration)
 			strbr.append(decl.generer()+"\n");
 		return strbr.toString();
+	}
+
+	@Override
+	public Iterator<Declaration> iterator() {
+		return listeDeclaration.iterator();
 	}
 }
