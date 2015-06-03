@@ -30,7 +30,7 @@ parser code {:
     }
 :};
 
-terminal String CSTE_ENT, PARENTHESE_OUVERT, PARENTHESE_FERMER, PLUS, MOINS, FOIS, INF, SUP, EGALE, DIFFERENT, BOOL;
+terminal String CSTE_ENT, PARENTHESE_OUVERT, PARENTHESE_FERMER, PLUS, MOINS, FOIS, DIVISER, INF, SUP, EGALE, DIFFERENT, BOOL;
 
 non terminal ArrayList <Expression> SYSTEME;
 non terminal ArrayList <Expression> LEXP;
@@ -39,7 +39,7 @@ non terminal Expression EXP;
 precedence left BOOL;
 precedence left INF, SUP, EGALE, DIFFERENT;
 precedence left PLUS, MOINS;
-precedence left FOIS;
+precedence left FOIS, DIVISER;
 
 start with SYSTEME;
 
@@ -63,6 +63,8 @@ EXP ::= CSTE_ENT:cste
 	  {: RESULT = new Soustraction(e1,e2); :}
 	| EXP:e1 FOIS EXP:e2
 	  {: RESULT = new Multiplication(e1,e2); :}
+	| EXP:e1 DIVISER EXP:e2
+	  {: RESULT = new Division(e1,e2); :}
 	| EXP:e1 INF EXP:e2
 	  {: RESULT=new Inferieur(e1,e2); :}
 	| EXP:e1 SUP EXP:e2
