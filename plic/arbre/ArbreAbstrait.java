@@ -17,8 +17,7 @@ public class ArbreAbstrait {
 	
 	public String generer(){
 		StringBuilder strbr = new StringBuilder();
-		strbr.append("# zone de reservation de memoire\n\n");
-		strbr.append("	// initialise s7 avec sp \n");
+		strbr.append("	# initialise s7 avec sp \n");
 		strbr.append("	la $s7,($sp) \n\n");
 		for(Expression e : arbre) strbr.append(e.generer() +"\n");
 		return strbr.toString();

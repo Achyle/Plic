@@ -14,6 +14,5 @@ public class TextMain {
 		}else{
 			System.out.println("Nombres arguments incorrect : ./Plic fichierSource fichierDestination");
 	  }
-
 	}
 }

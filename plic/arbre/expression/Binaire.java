@@ -10,8 +10,7 @@ public abstract class Binaire extends Expression {
 	public abstract int valeur();
 	public Binaire(Expression expGauche, Expression expDroite) throws TypeIncompatibleException{
 		gauche = expGauche;
-		droite = expDroite;
-		incCptEtiquette();
+		droite = expDroite;	
 		if(gauche.type == droite.type)
 			type = gauche.type;
 		else

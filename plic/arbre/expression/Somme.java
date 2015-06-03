@@ -18,7 +18,8 @@ public class Somme extends Binaire{
 	      	   "	lw $t8,($sp)\n" +
 	      	   "	add $v0,$v0,$t8\n" +
 	           "	sw $v0,($sp)\n" +
-	           "	add $sp,$sp,-4\n";	
+	           "	add $sp,$sp,-4\n" +
+	            +Expression.cptEtiquette;	
 	}
 
 	@Override
@@ -28,7 +29,7 @@ public class Somme extends Binaire{
 	}
 	
 	public String toString(){
-		return this.gauche +" + "+this.droite;
+		return this.gauche.valeur() +" + "+this.droite.valeur();
 	}
 
 }

@@ -29,7 +29,7 @@ public class Multiplication extends Binaire{
 	}
 	
 	public String toString(){
-		return this.gauche +" * "+this.droite;
+		return this.gauche.valeur() +" * "+this.droite.valeur();
 	}
 
 }

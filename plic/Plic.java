@@ -5,12 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 import plic.analyse.AnalyseurLexical;
 import plic.analyse.AnalyseurSyntaxique;
 import plic.arbre.ArbreAbstrait;
-import plic.arbre.expression.Expression;
 
 
 public class Plic {
@@ -23,7 +21,7 @@ public class Plic {
 		fichierDestination = fr;
 	}
 	
-	@SuppressWarnings({ "deprecation", "unchecked" })
+	@SuppressWarnings({ "deprecation" })
 	public void gereCodeAssembleur(){
 		PrintWriter pw;
 		AnalyseurSyntaxique as;
@@ -32,19 +30,21 @@ public class Plic {
 			pw = new PrintWriter(new BufferedWriter(new FileWriter(fichierDestination+".asm")));	
 			as = new AnalyseurSyntaxique(new AnalyseurLexical(new FileReader(fichierSource)));
 			arbre = (ArbreAbstrait) as.parse().value;
+			pw.write("# zone de reservation de memoire\n");
 			pw.write(".data\n");
-			pw.write("stri: .asciiz \" Si le test concerne un boolean: true = 1 et false = 0,\n");
-			pw.write(".text\n\n");
+			pw.write("stri: .asciiz # Si le test concerne un boolean alors true = 1 et false = 0 \n\n");
+			pw.write("# zone programme\n");
+			pw.write(".text\n");
 			String res = arbre.generer() ;
-			pw.write(res);
-			 
-			pw.write("\n Affiche Resultat $v0\n");
-			pw.write("li $v0, 4\n");
-			pw.write("la $a0, stri\n");
-			pw.write("syscall\n");
-			pw.write("li $v0, 1\n");
-			pw.write("lw $a0, 4($sp)\n");
-			pw.write("syscall\n");
+			pw.write(res+"\n");
+			
+			pw.write("	# retourne le resultat\n");
+			pw.write("	li $v0, 4\n");
+			pw.write("	la $a0, stri\n");
+			pw.write("	syscall\n");
+			pw.write("	li $v0, 1\n");
+			pw.write("	lw $a0, 4($sp)\n");
+			pw.write("	syscall\n");
 			
 			pw.close();
 			 

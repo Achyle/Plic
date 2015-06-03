@@ -10,6 +10,7 @@ public class Egale extends Binaire{
 
 	@Override
 	public String generer(){
+		incCptEtiquette();
 		return this.gauche.generer()+"\n" + this.droite.generer()+ "\n" +
 	           "	# Compare "+this.toString()+"\n"+
 	      	   "	add $sp,$sp,4\n" +	
@@ -38,7 +39,7 @@ public class Egale extends Binaire{
 	}
 	
 	public String toString(){
-		return this.gauche +" == "+this.droite;
+		return this.gauche.valeur() +" == "+this.droite.valeur();
 	}
 
 }

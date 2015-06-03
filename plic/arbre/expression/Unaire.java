@@ -10,9 +10,8 @@ public class Unaire extends Expression {
 	}
 
 	public String generer() {
-		return "	# Range "+ this.valeur +" dans $v0\n" +
+		return "	# Range "+ this.valeur +" dans $v0 et l'empile\n" +
 				   "	li $v0, " + this.valeur + "\n" +
-				   "	# permet d'empiler " + this.valeur + "\n" +
 				   "	sw $v0,($sp) \n" +
 				   "	add $sp ,$sp,-4 \n";
 	}
