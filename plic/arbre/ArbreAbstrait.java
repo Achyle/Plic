@@ -2,8 +2,6 @@ package plic.arbre;
 
 import java.util.ArrayList;
 
-import plic.arbre.expression.Expression;
-
 public class ArbreAbstrait {
 	
 	ArrayList<Classe> arbre;

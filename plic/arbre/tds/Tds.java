@@ -3,6 +3,7 @@ package plic.arbre.tds;
 import java.util.HashMap;
 
 import plic.exception.DoubleDeclarationException;
+import plic.exception.PasDeDeclarationException;
 
 public class Tds {
 	
@@ -17,18 +18,21 @@ public class Tds {
 		return instance ;
 	}
 	
-	public void ajouterVariable(String idf, Symbole symbole) throws DoubleDeclarationException{
+	public void ajouterVariable(String key, Symbole symbole) throws DoubleDeclarationException{
 		// si la variable est deja declarée lance une exception 
-		if (tds.containsKey(idf)){
-			throw new DoubleDeclarationException(idf +" est déja déclaré");
+		if (tds.containsKey(key)){
+			throw new DoubleDeclarationException(key +" est déja déclaré");
 		}else{ // sinon ajoute la variable dans la hashMap
-			tds.put(idf, symbole);
+			tds.put(key, symbole);
 		}
+	}	
+	
+	public Symbole identifier(String key) throws PasDeDeclarationException{
+		Symbole s = tds.get(key);
+		if(s==null){
+			throw new PasDeDeclarationException(key +" n'a pas été déclaté !");
+		}
+		return tds.get(key);
 	}
 	
-	
-	
-	
-	
-
 }
