@@ -1,0 +1,39 @@
+#! /bin/csh
+#recuperation de nom du fichier . plic ensuite Main
+
+#test des parametres.
+
+if ($#argv != 2) then
+    echo "usage : $0 [Fichier .plic] [Fichier Main]"
+    exit(1)
+endif
+
+set argument1 = $argv[1];
+set argument2 = $argv[2];
+
+#test de l'existance du premiere argument
+if (!(-e $argument1)) then
+    echo $argument1 "n'existe pas"
+    exit(1)
+endif
+
+#test que le premiere argument soit bien un fichier
+if (-d $argument1) then
+    echo "le premier argument doit etre un fichier et non un repertoire"
+    exit(1)
+endif
+
+# test que l'extention est bien .plic
+set test = `echo $argument1 | cut -d. -f2`
+set nomFichier = `echo $argument1 | cut -d. -f1`
+
+if( $test != 'plic' ) then
+    echo "le premier argument doit etre un fichier .plic"
+endif
+
+#execute le jar.
+java -jar plic1.jar $argument1  /tmp/$nomFichier
+
+#ouvrir mars et executer le fichier de sortie.
+set MARSPATH = "/opt/depot/compilation/Mars4_5.jar"
+java -jar $MARSPATH /tmp/$nomFichier.asm

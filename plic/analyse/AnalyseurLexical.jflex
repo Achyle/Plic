@@ -47,6 +47,7 @@ LineTerminator= \r|\n|\r\n
 <YYINITIAL> "+" 	 	{ return symbol(CodesLexicaux.PLUS); }
 <YYINITIAL> "-" 	 	{ return symbol(CodesLexicaux.MOINS); }
 <YYINITIAL> "*" 	 	{ return symbol(CodesLexicaux.FOIS); }
+<YYINITIAL> "/"			{ return symbol(CodesLexicaux.DIVISER); }
 <YYINITIAL> "<" 	 	{ return symbol(CodesLexicaux.INF); }
 <YYINITIAL> ">" 	 	{ return symbol(CodesLexicaux.SUP); }
 <YYINITIAL> "==" 	 	{ return symbol(CodesLexicaux.EGALE); }
