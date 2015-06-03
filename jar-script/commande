@@ -1,0 +1,2 @@
+java -jar /home/achyle/workspace/Plic/src/jar-script/java-cup-11b.jar -parser AnalyseurSyntaxique -symbols CodesLexicaux Grammaire.cup
+java -jar /home/achyle/workspace/Plic/src/jar-script/jflex-1.6.1.jar AnalyseurLexical.jflex

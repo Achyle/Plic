@@ -53,24 +53,24 @@ LEXP ::= EXP:e
 	      RESULT = lx; :};
 
 EXP ::= CSTE_ENT:cste
-	  	{:System.out.println("cste"); RESULT = new Unaire(Integer.parseInt(""+cste),false); :}
+	  	{: RESULT = new Unaire(Integer.parseInt(""+cste),false); :}
 	| PARENTHESE_OUVERT EXP:e PARENTHESE_FERMER
 	  {: RESULT = e; :}
 	| MOINS EXP:e
-	  {: System.out.println("-e"); RESULT = new Multiplication(new Unaire(-1,false),e); :}
+	  {: RESULT = new Multiplication(new Unaire(-1,false),e); :}
 	| EXP:e1 PLUS EXP:e2
-	  {: System.out.println("+"); System.out.println(e1+" "+e2); RESULT = new Somme(e1,e2); :}
+	  {: RESULT = new Somme(e1,e2); :}
 	| EXP:e1 MOINS EXP:e2
-	  {: System.out.println("-");RESULT = new Soustraction(e1,e2); :}
+	  {: RESULT = new Soustraction(e1,e2); :}
 	| EXP:e1 FOIS EXP:e2
-	  {: System.out.println("*");RESULT = new Multiplication(e1,e2); :}
+	  {: RESULT = new Multiplication(e1,e2); :}
 	| EXP:e1 INF EXP:e2
-	  {: System.out.println("<");RESULT=new Inferieur(e1,e2); :}
+	  {: RESULT=new Inferieur(e1,e2); :}
 	| EXP:e1 SUP EXP:e2
-	  {: System.out.println(">");RESULT=new Superieur(e1,e2); :}
+	  {: RESULT=new Superieur(e1,e2); :}
 	| EXP:e1 EGALE EXP:e2
-	  {: System.out.println("==");RESULT=new Egale(e1,e2); :}
+	  {: RESULT=new Egale(e1,e2); :}
 	| EXP:e1 DIFFERENT EXP:e2
-	  {: System.out.println("!=");RESULT=new Different(e1,e2); :}
+	  {: RESULT=new Different(e1,e2); :}
 	| BOOL:b
-	  {: System.out.println("bool");RESULT=new Unaire(b=="vrai"?1:0,true); :};
+	  {: RESULT=new Unaire(b=="vrai"?1:0,true); :};
