@@ -10,5 +10,4 @@ public abstract class Expression {
 	}
 	public enum TypeExpression {BOOLEAN, ARITHMETIQUE};
 	protected TypeExpression type;
-
 }

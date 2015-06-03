@@ -11,6 +11,10 @@ public class ArbreAbstrait {
 		arbre = new ArrayList<Expression>();
 	}
 	
+	public ArbreAbstrait (Classe c){
+		arbre = new ArrayList<Expression>();
+	}
+	
 	public void ajouterAction(Expression exp){
 		this.arbre.add(exp);
 	}	
