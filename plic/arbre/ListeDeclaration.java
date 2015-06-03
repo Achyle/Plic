@@ -23,7 +23,7 @@ public class ListeDeclaration {
 			//strbr.append("	add $sp ,$sp,-4 \n");
 		//}
 		strbr.append("\n# zone programme\n");;
-		for(Declaration decl : declaration)
+		for(Declaration decl : listeDeclaration)
 			strbr.append(decl.generer()+"\n");
 		return strbr.toString();
 	}
