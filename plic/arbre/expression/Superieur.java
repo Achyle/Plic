@@ -4,6 +4,7 @@ import plic.exception.TypeIncompatibleException;
 
 public class Superieur extends Binaire{
 	
+	private int cpt = 0;
 	public Superieur(Expression expGauche, Expression expDroite) throws TypeIncompatibleException{
 		super(expGauche,expDroite);
 	}
@@ -11,24 +12,25 @@ public class Superieur extends Binaire{
 	@Override
 	public String generer(){
 		incCptEtiquette();
+		cpt = Expression.cptEtiquette;
 		return this.gauche.generer()+"\n" + this.droite.generer()+ "\n" +
 	           "	# Compare "+this.toString()+"\n"+
-	      	   "	add $sp,$sp,4\n" +	
+	      	   "	add $sp,$sp,4\n" +
 	      	   "	lw $v0,($sp)\n" +
 	      	   "	add $sp,$sp,4\n" +
 	      	   "	lw $t8,($sp)\n" +
 	      	   "	sub $v0,$v0,$t8\n" +
-			   "	bgez $v0 sinon"+Expression.cptEtiquette+"\n" +
-	           "	alors"+Expression.cptEtiquette+":\n" +
+			   "	bgez $v0 sinon"+cpt+"\n" +
+	           "	alors"+cpt+":\n" +
 	           "	li $v0, 1\n" + 
 	           "	sw $v0,0($sp)\n" +
 	           "	add $sp,$sp,-4\n" +
-	           "	j finsi"+Expression.cptEtiquette+"\n" + 
-	           "	sinon"+Expression.cptEtiquette+":\n" + 
+	           "	j finsi"+cpt+"\n" + 
+	           "	sinon"+cpt+":\n" + 
 	           "	li $v0, 0\n" + 
 	       	   "	sw $v0,0($sp)\n" + 
 	           "	add $sp,$sp,-4\n" +
-	       	   "	finsi"+Expression.cptEtiquette+":\n";
+	       	   "	finsi"+cpt+":\n";
 	}
 
 	@Override

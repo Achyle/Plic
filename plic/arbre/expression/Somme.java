@@ -18,8 +18,7 @@ public class Somme extends Binaire{
 	      	   "	lw $t8,($sp)\n" +
 	      	   "	add $v0,$v0,$t8\n" +
 	           "	sw $v0,($sp)\n" +
-	           "	add $sp,$sp,-4\n" +
-	            +Expression.cptEtiquette;	
+	           "	add $sp,$sp,-4\n";	
 	}
 
 	@Override
