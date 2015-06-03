@@ -1,7 +1,5 @@
 package plic.arbre;
 
-import java.util.Iterator;
-
 import plic.arbre.tds.Tds;
 
 public class DeclarationChamps extends Declaration{
