@@ -46,12 +46,11 @@ public class Tds {
 		StringBuilder rep = new StringBuilder();
 		Set<String> cles = tds.keySet();
 		for (String cle : cles) {
-			rep.append("	lw $v0,"+ Tds.getInstance().identifier(cle).getDeplacement()+"($t7)\n");
+			rep.append("	lw $v0,"+ Tds.getInstance().identifier(cle).getDeplacement()+"($s7)\n");
 			rep.append("	sw $v0,($sp)\n");
 			rep.append("	add $sp ,$sp,-4\n");
 		}
 		return rep.toString();
 	}
-
 
 }
