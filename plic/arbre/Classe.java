@@ -1,6 +1,7 @@
 package plic.arbre;
 
 import plic.arbre.tds.Tds;
+import plic.exception.PasDeDeclarationException;
 
 public class Classe {
 	
@@ -12,7 +13,7 @@ public class Classe {
 		this.idf = idf;
 	}
 
-	public String generer() {
+	public String generer() throws PasDeDeclarationException {
 		StringBuilder res = new StringBuilder();
 		res.append(Tds.getInstance().generer());
 		return res.toString();

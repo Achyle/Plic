@@ -35,7 +35,7 @@ public class Plic {
 			pw.write("stri: .asciiz # Si le test concerne un boolean alors true = 1 et false = 0 \n\n");
 			pw.write("# zone programme\n");
 			pw.write(".text\n");
-			String res = arbre.generer() ;
+			String res = arbre.generer();
 			pw.write(res+"\n");
 			
 			pw.close();

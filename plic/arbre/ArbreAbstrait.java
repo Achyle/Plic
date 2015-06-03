@@ -2,6 +2,8 @@ package plic.arbre;
 
 import java.util.ArrayList;
 
+import plic.exception.PasDeDeclarationException;
+
 public class ArbreAbstrait {
 	
 	ArrayList<Classe> arbre;
@@ -11,7 +13,7 @@ public class ArbreAbstrait {
 		arbre.add(c);
 	}
 	
-	public String generer(){
+	public String generer() throws PasDeDeclarationException{
 		StringBuilder strbr = new StringBuilder();
 		for(Classe c : arbre) strbr.append(c.generer() +"\n");
 		return strbr.toString();

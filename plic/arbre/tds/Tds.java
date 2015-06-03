@@ -41,12 +41,14 @@ public class Tds {
 		return tds.get(key);
 	}
 
-	public Object generer() {
+	public Object generer() throws PasDeDeclarationException {
 		// TODO Auto-generated method stub
 		StringBuilder rep = new StringBuilder();
 		Set<String> cles = tds.keySet();
 		for (String cle : cles) {
-			rep.append("variable : "+cle+" symbole : ("+tds.get(cle)+")\n");
+			rep.append("	lw $v0,"+ Tds.getInstance().identifier(cle).getDeplacement()+"($t7)\n");
+			rep.append("	sw $v0,($sp)\n");
+			rep.append("	add $sp ,$sp,-4\n");
 		}
 		return rep.toString();
 	}
