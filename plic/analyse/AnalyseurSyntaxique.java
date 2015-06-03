@@ -218,7 +218,6 @@ class CUP$AnalyseurSyntaxique$actions {
 		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
 		 ArrayList<Expression> lx = new ArrayList<Expression>();
 	      lx.add(e);
-	      System.out.println("1");
 	      RESULT = lx; 
               CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("LEXP",1, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
             }

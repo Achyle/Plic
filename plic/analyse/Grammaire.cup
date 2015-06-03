@@ -49,7 +49,6 @@ SYSTEME	::= LEXP:lx
 LEXP ::= EXP:e
 	   {: ArrayList<Expression> lx = new ArrayList<Expression>();
 	      lx.add(e);
-	      System.out.println("1");
 	      RESULT = lx; :};
 
 EXP ::= CSTE_ENT:cste
