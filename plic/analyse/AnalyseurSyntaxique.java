@@ -5,9 +5,17 @@
 
 package plic.analyse;
 
-import plic.arbre.expression.*;
-import java.util.ArrayList;
-import java_cup.runtime.XMLElement;
+import plic.arbre.ArbreAbstrait;
+import plic.arbre.expression.Different;
+import plic.arbre.expression.Division;
+import plic.arbre.expression.Egale;
+import plic.arbre.expression.Expression;
+import plic.arbre.expression.Inferieur;
+import plic.arbre.expression.Multiplication;
+import plic.arbre.expression.Somme;
+import plic.arbre.expression.Soustraction;
+import plic.arbre.expression.Superieur;
+import plic.arbre.expression.Unaire;
 
 /** CUP v0.11b 20150326 (SVN rev 63) generated parser.
   */
@@ -162,7 +170,7 @@ public class AnalyseurSyntaxique extends java_cup.runtime.lr_parser {
 
 
 /** Cup generated class to encapsulate user supplied action code.*/
-@SuppressWarnings({"rawtypes", "unchecked", "unused"})
+@SuppressWarnings({"unused"})
 class CUP$AnalyseurSyntaxique$actions {
 
  
@@ -194,7 +202,7 @@ class CUP$AnalyseurSyntaxique$actions {
               Object RESULT =null;
 		int start_valleft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)).left;
 		int start_valright = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)).right;
-		ArrayList<Expression> start_val = (ArrayList<Expression>)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)).value;
+		ArbreAbstrait start_val = (ArbreAbstrait)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)).value;
 		RESULT = start_val;
               CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("$START",0, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
             }
@@ -205,10 +213,10 @@ class CUP$AnalyseurSyntaxique$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 1: // SYSTEME ::= LEXP 
             {
-              ArrayList<Expression> RESULT =null;
+              ArbreAbstrait RESULT =null;
 		int lxleft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).left;
 		int lxright = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).right;
-		ArrayList<Expression> lx = (ArrayList<Expression>)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
+		ArbreAbstrait lx = (ArbreAbstrait)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
 		 RESULT = lx; 
               CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("SYSTEME",0, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
             }
@@ -217,13 +225,13 @@ class CUP$AnalyseurSyntaxique$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 2: // LEXP ::= EXP 
             {
-              ArrayList<Expression> RESULT =null;
+              ArbreAbstrait RESULT =null;
 		int eleft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).right;
 		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
-		 ArrayList<Expression> lx = new ArrayList<Expression>();
-	      lx.add(e);
-	      RESULT = lx; 
+		 ArbreAbstrait arbre = new ArbreAbstrait();
+	      arbre.ajouterAction(e);
+	      RESULT = arbre; 
               CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("LEXP",1, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
             }
           return CUP$AnalyseurSyntaxique$result;
