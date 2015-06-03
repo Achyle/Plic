@@ -4,7 +4,7 @@ public class DeclarationConstantes {
 	
 	protected ListeInstruction listeInstruction;
 	
-	public ListeInstruction(ListeInstruction listeInstruction){
+	public DeclarationConstantes (ListeInstruction listeInstruction){
 		this.listeInstruction = listeInstruction;
 	}
 
