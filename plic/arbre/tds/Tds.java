@@ -1,6 +1,7 @@
 package plic.arbre.tds;
 
 import java.util.HashMap;
+import java.util.Set;
 
 import plic.arbre.DeclarationChamps.Statut;
 import plic.arbre.DeclarationChamps.Type;
@@ -38,6 +39,16 @@ public class Tds {
 			throw new PasDeDeclarationException(key +" n'a pas été déclaté !");
 		}
 		return tds.get(key);
+	}
+
+	public Object generer() {
+		// TODO Auto-generated method stub
+		StringBuilder rep = new StringBuilder();
+		Set<String> cles = tds.keySet();
+		for (String cle : cles) {
+			rep.append("variable : "+cle+" symbole : ("+tds.get(cle)+")\n");
+		}
+		return rep.toString();
 	}
 
 

@@ -8,14 +8,21 @@ public class DeclarationChamps extends Declaration{
 	public enum Statut {PRIVEE,PUBLIQUE};
 	private Statut statut;
 	
-	public enum Type {ENTIER,BOOLEAN,CLASSE};
+	public enum Type {ENTIER,BOOLEAN};
 	private Type type;
 	
 	protected ListeIdentifiant listeIdentifiant;
 	
-	public DeclarationChamps(Statut statut, Type type, ListeIdentifiant listeIdentifiant) throws DoubleDeclarationException{
-		this.setStatut(statut);
-		this.setType(type);
+	public DeclarationChamps(String s, String t, ListeIdentifiant listeIdentifiant) throws DoubleDeclarationException{
+		if(s.equals("privee"))
+			statut = Statut.PRIVEE;
+		else if(s.equals("publique"))
+			statut = Statut.PUBLIQUE;
+		
+		if(t.equals("entier"))
+			type = Type.ENTIER;
+		else if(t.equals("boolean"))
+			type = Type.BOOLEAN;
 		this.listeIdentifiant = listeIdentifiant;
 		for (String idf : listeIdentifiant) {
 			Tds.getInstance().ajouterChamp(statut, type, idf);

@@ -12,12 +12,15 @@ public class CodesLexicaux {
   public static final int pointvirgule = 16;
   public static final int sup = 10;
   public static final int cste_ent = 2;
+  public static final int type = 19;
   public static final int inf = 9;
   public static final int parenthese_fermer = 4;
   public static final int bool = 13;
   public static final int EOF = 0;
   public static final int different = 12;
+  public static final int statut = 18;
   public static final int error = 1;
+  public static final int virgule = 20;
   public static final int classe = 14;
   public static final int plus = 5;
   public static final int fin = 15;
@@ -44,7 +47,10 @@ public class CodesLexicaux {
   "classe",
   "fin",
   "pointvirgule",
-  "idf"
+  "idf",
+  "statut",
+  "type",
+  "virgule"
   };
 }
 

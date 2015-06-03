@@ -38,4 +38,8 @@ public class Symbole {
     public void setDeplacement(int deplacement) {
         this.deplacement = deplacement;
     }
+    
+    public String toString(){
+    	return statut+" "+type+" "+deplacement;
+    }
 }

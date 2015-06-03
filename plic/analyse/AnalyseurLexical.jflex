@@ -32,7 +32,7 @@ entier = [0-9]+
 bool = vrai | faux
 idf = [a-zA-Z][a-zA-Z0-9]*
 statut = publique | privee
-type = entier | double | boolean
+type = entier
 cstchaine = \"[^;]*\"
 LineTerminator= \r|\n|\r\n
 
@@ -41,6 +41,8 @@ LineTerminator= \r|\n|\r\n
 <YYINITIAL> "classe" 	{ return symbol(CodesLexicaux.classe); }
 <YYINITIAL> "fin" 		{ return symbol(CodesLexicaux.fin); }
 <YYINITIAL> {entier} 	{ return symbol(CodesLexicaux.cste_ent, yytext()); }
+<YYINITIAL> {statut} 	{ return symbol(CodesLexicaux.statut, yytext()); }
+<YYINITIAL> {type} 		{ return symbol(CodesLexicaux.type, yytext()); }
 <YYINITIAL> {bool} 		{ return symbol(CodesLexicaux.bool, yytext()); }
 <YYINITIAL> {idf} 		{ return symbol(CodesLexicaux.idf, yytext()); }
 <YYINITIAL> "+" 	 	{ return symbol(CodesLexicaux.plus); }
@@ -54,6 +56,7 @@ LineTerminator= \r|\n|\r\n
 <YYINITIAL> "(" 		{ return symbol(CodesLexicaux.parenthese_ouvert); }
 <YYINITIAL> ")" 		{ return symbol(CodesLexicaux.parenthese_fermer); }
 <YYINITIAL> ";" 		{ return symbol(CodesLexicaux.pointvirgule); }
+<YYINITIAL> "," 		{ return symbol(CodesLexicaux.virgule); }
 
 
 <YYINITIAL>	 "//"		{ yybegin(Commentaire) ; }

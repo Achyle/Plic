@@ -1,5 +1,7 @@
 package plic.arbre;
 
+import plic.arbre.tds.Tds;
+
 public class Classe {
 	
 	protected ListeDeclaration listeDeclaration;
@@ -12,7 +14,7 @@ public class Classe {
 
 	public String generer() {
 		StringBuilder res = new StringBuilder();
-		for(Declaration d : listeDeclaration) res.append(d.generer()+"\n");
+		res.append(Tds.getInstance().generer());
 		return res.toString();
 	}
 

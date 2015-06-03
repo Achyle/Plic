@@ -3,7 +3,9 @@ package plic.analyse;
 import plic.arbre.ArbreAbstrait;
 import plic.arbre.Classe;
 import plic.arbre.Declaration;
+import plic.arbre.DeclarationChamps;
 import plic.arbre.ListeDeclaration;
+import plic.arbre.ListeIdentifiant;
 import plic.arbre.expression.Different;
 import plic.arbre.expression.Division;
 import plic.arbre.expression.Egale;
@@ -43,12 +45,14 @@ parser code {:
 :};
 
 terminal String cste_ent, parenthese_ouvert, parenthese_fermer, plus, moins, fois, diviser, inf, sup, egale;
-terminal String different, bool, classe, fin, pointvirgule, idf;
+terminal String different, bool, classe, fin, pointvirgule, idf, statut, type, virgule;
 
 non terminal ArbreAbstrait SYSTEME;
 non terminal Classe CLASSE;
 non terminal ListeDeclaration LDECL;
 non terminal Declaration DECLARATION;
+non terminal DeclarationChamps DECL_CHAMP;
+non terminal ListeIdentifiant LIDF;
 non terminal Expression EXP;
 
 precedence left bool;
@@ -72,8 +76,20 @@ LDECL ::= LDECL:l DECLARATION:d
 		l.ajouterDeclaration(d);
 		RESULT = l; :};
 	
-DECLARATION ::= EXP:e pointvirgule
-	{: RESULT = new Declaration(); :};
+DECLARATION ::= DECL_CHAMP:d pointvirgule
+	{: RESULT = d; :};
+	
+DECL_CHAMP ::= statut:s type:t LIDF:l
+	{: RESULT = new DeclarationChamps(s,t,l); :};
+
+LIDF ::= LIDF:l virgule idf:i
+	{: 	l.ajouterIdentifiant(i);
+		RESULT = l; :}
+	| idf:i
+	{: 	ListeIdentifiant l = new ListeIdentifiant();
+		l.ajouterIdentifiant(i);
+		RESULT = l; :};
+	
 
 EXP ::= cste_ent:cste
 	  	{: RESULT = new Unaire(Integer.parseInt(""+cste),false); :}
