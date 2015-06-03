@@ -16,12 +16,8 @@ public class ListeDeclaration {
 	
 	public String generer(){
 		StringBuilder strbr = new StringBuilder();
-		strbr.append("# zone de reservation de memoire\n\n");
-		strbr.append("	// initialise s7 avec sp \n"); 
+		strbr.append("	# initialise s7 avec sp \n"); 
 		strbr.append("	la $s7,($sp) \n\n");
-		//for(int i=0;i<Tds.getInstance().getTailleMap();i++){	
-			//strbr.append("	add $sp ,$sp,-4 \n");
-		//}
 		strbr.append("\n# zone programme\n");;
 		for(Declaration decl : listeDeclaration)
 			strbr.append(decl.generer()+"\n");
