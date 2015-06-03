@@ -10,7 +10,7 @@ public class ListeDeclaration {
 		this.listeDeclaration = new ArrayList<Declaration>();
 	}
 	
-	public void ajouterAction(Declaration declaration){
+	public void ajouterDeclaration(Declaration declaration){
 		this.listeDeclaration.add(declaration);
 	}
 	
