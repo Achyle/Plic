@@ -2,12 +2,16 @@ package plic.arbre.tds;
 
 import java.util.HashMap;
 
+import plic.arbre.DeclarationChamps.Statut;
+import plic.arbre.DeclarationChamps.Type;
 import plic.exception.DoubleDeclarationException;
 import plic.exception.PasDeDeclarationException;
 
 public class Tds {
 	
 	HashMap<String, Symbole> tds;
+	private int deplacement = 0;
+
 	public Tds(){
 		tds =  new HashMap<String, Symbole>();
 	}
@@ -18,12 +22,13 @@ public class Tds {
 		return instance ;
 	}
 	
-	public void ajouterVariable(String key, Symbole symbole) throws DoubleDeclarationException{
+	public void ajouterChamp(Statut statut, Type type, String idf) throws DoubleDeclarationException{
 		// si la variable est deja declarée lance une exception 
-		if (tds.containsKey(key)){
-			throw new DoubleDeclarationException(key +" est déja déclaré");
+		if (tds.containsKey(idf)){
+			throw new DoubleDeclarationException(idf +" est déja déclaré");
 		}else{ // sinon ajoute la variable dans la hashMap
-			tds.put(key, symbole);
+			tds.put(idf, new Symbole(statut, type, deplacement));
+			this.deplacement += 4;
 		}
 	}	
 	
@@ -35,8 +40,5 @@ public class Tds {
 		return tds.get(key);
 	}
 
-	public void ajouterChamp(Statut statut, Type type, String idf) {
-		
-	}
 
 }

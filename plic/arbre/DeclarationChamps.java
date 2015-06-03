@@ -1,6 +1,7 @@
 package plic.arbre;
 
 import plic.arbre.tds.Tds;
+import plic.exception.DoubleDeclarationException;
 
 public class DeclarationChamps extends Declaration{
 	
@@ -12,7 +13,7 @@ public class DeclarationChamps extends Declaration{
 	
 	protected ListeIdentifiant listeIdentifiant;
 	
-	public DeclarationChamps(Statut statut, Type type, ListeIdentifiant listeIdentifiant){
+	public DeclarationChamps(Statut statut, Type type, ListeIdentifiant listeIdentifiant) throws DoubleDeclarationException{
 		this.setStatut(statut);
 		this.setType(type);
 		this.listeIdentifiant = listeIdentifiant;
