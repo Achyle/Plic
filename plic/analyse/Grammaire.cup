@@ -59,22 +59,16 @@ precedence left fois, diviser;
 start with SYSTEME;
 
 SYSTEME	::= CLASSE:c
-	{: 	System.out.println("systeme"); 
-		RESULT = new ArbreAbstrait(c); :};
+	{: RESULT = new ArbreAbstrait(c); :};
 	
 CLASSE ::= classe idf:i LDECL:l fin
-	{: System.out.println("classe");
-	   RESULT = new Classe(l,i); :};
+	{: RESULT = new Classe(l,i); :};
 
 LDECL ::= LDECL:l DECLARATION:d
-	{: 	
-		System.out.println("liste declaration add");
-		l.ajouterDeclaration(d);
+	{: 	l.ajouterDeclaration(d);
 		RESULT = l; :}
 	| DECLARATION:d
-	{: 	
-		System.out.println("liste declaration new");
-		ListeDeclaration l = new ListeDeclaration(); 
+	{: 	ListeDeclaration l = new ListeDeclaration(); 
 		l.ajouterDeclaration(d);
 		RESULT = l; :};
 	

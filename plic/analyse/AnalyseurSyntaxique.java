@@ -230,8 +230,7 @@ class CUP$AnalyseurSyntaxique$actions {
 		int cleft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).left;
 		int cright = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).right;
 		Classe c = (Classe)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
-		 	System.out.println("systeme"); 
-		RESULT = new ArbreAbstrait(c); 
+		 RESULT = new ArbreAbstrait(c); 
               CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("SYSTEME",0, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
             }
           return CUP$AnalyseurSyntaxique$result;
@@ -246,8 +245,7 @@ class CUP$AnalyseurSyntaxique$actions {
 		int lleft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)).left;
 		int lright = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)).right;
 		ListeDeclaration l = (ListeDeclaration)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)).value;
-		 System.out.println("classe");
-	   RESULT = new Classe(l,i); 
+		 RESULT = new Classe(l,i); 
               CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("CLASSE",1, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-3)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
             }
           return CUP$AnalyseurSyntaxique$result;
@@ -262,9 +260,7 @@ class CUP$AnalyseurSyntaxique$actions {
 		int dleft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).left;
 		int dright = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).right;
 		Declaration d = (Declaration)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
-		 	
-		System.out.println("liste declaration add");
-		l.ajouterDeclaration(d);
+		 	l.ajouterDeclaration(d);
 		RESULT = l; 
               CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("LDECL",2, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
             }
@@ -277,9 +273,7 @@ class CUP$AnalyseurSyntaxique$actions {
 		int dleft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).left;
 		int dright = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).right;
 		Declaration d = (Declaration)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
-		 	
-		System.out.println("liste declaration new");
-		ListeDeclaration l = new ListeDeclaration(); 
+		 	ListeDeclaration l = new ListeDeclaration(); 
 		l.ajouterDeclaration(d);
 		RESULT = l; 
               CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("LDECL",2, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
