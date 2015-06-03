@@ -34,5 +34,9 @@ public class Tds {
 		}
 		return tds.get(key);
 	}
+
+	public void ajouterChamp(Statut statut, Type type, String idf) {
+		
+	}
 	
 }
