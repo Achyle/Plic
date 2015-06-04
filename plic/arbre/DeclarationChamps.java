@@ -45,4 +45,10 @@ public class DeclarationChamps extends Declaration{
 		this.type = type;
 	}
 
+	@Override
+	public String generer() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

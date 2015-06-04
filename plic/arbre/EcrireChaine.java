@@ -2,7 +2,7 @@ package plic.arbre;
 
 import plic.arbre.expression.Expression;
 
-public class EcrireChaine extends Instruction{
+public class EcrireChaine extends DeclarationConstantes{
 	
 	private String chaine ;
 	private int cpt = 0;

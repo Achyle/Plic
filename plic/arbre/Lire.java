@@ -4,7 +4,7 @@ import plic.arbre.expression.Expression;
 import plic.arbre.tds.Tds;
 import plic.exception.PasDeDeclarationException;
 
-public class Lire extends Instruction {
+public class Lire extends DeclarationConstantes {
 
 	private String idf;
 	private int cpt = 0;
