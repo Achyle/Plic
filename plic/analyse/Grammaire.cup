@@ -46,7 +46,7 @@ parser code {:
             }
         }
 		System.out.println(mess);
-        //System.exit(1);
+        System.exit(1);
     }
 :};
 
