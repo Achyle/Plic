@@ -30,21 +30,17 @@ parser code {:
     public void report_error(String message, Object info) {
    
         StringBuffer m = new StringBuffer("Error");
+        String mess = "";
         if (info instanceof java_cup.runtime.Symbol) {
             java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
             if (s.left >= 0) {                
-                m.append(" in line "+(s.left+1));   
-                if (s.right >= 0)                    
-                    m.append(", column "+(s.right+1));
+                mess = "ERREUR SYNTAXIQUE : "+(s.left+1);
             }
         }
-
-        m.append(" : "+message);
-        System.err.println(m);
+		System.out.println(mess);
     }
 
     public void report_fatal_error(String message, Object info) {
-        report_error(message, info);
         System.exit(1);
     }
 :};
@@ -111,7 +107,9 @@ DECL_CONST ::= AFFECT:a
 	{: RESULT = i; :};
 	
 AFFECT ::=  idf:i egale EXP:e 
-	{: RESULT = new Affectation(i,e); :};
+	{: RESULT = new Affectation(i,e); :}
+	| idf:i1 egale idf:i2
+	{: RESULT = new Affectation(i1,i2); :};
 	
 INSTLIRE ::= lire idf:i
 	{: RESULT = new Lire(i); :};
