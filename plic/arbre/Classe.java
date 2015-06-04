@@ -15,7 +15,11 @@ public class Classe {
 
 	public String generer() throws PasDeDeclarationException {
 		StringBuilder res = new StringBuilder();
-		res.append(Tds.getInstance().generer());
+		if(this.listeDeclaration != null){
+			res.append(Tds.getInstance().generer());
+		}else{
+			res.append("");
+		}
 		return res.toString();
 	}
 
