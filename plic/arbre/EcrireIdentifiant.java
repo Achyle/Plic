@@ -13,8 +13,9 @@ public class EcrireIdentifiant extends DeclarationConstantes{
 	
 	public String generer() throws PasDeDeclarationException {
 		StringBuilder ecrire = new StringBuilder();
+		ecrire.append("	# Ecrire "+idf+"\n");
 		ecrire.append("	li $v0, 1 \n");
-		ecrire.append("	lw $a0,"+ Tds.getInstance().identifier(idf).getDeplacement() +"($sp) \n");
+		ecrire.append("	lw $a0,"+ Tds.getInstance().identifier(idf).getDeplacement() +"($s7) \n");
 		ecrire.append("	syscall\n\n");
 				
 		return ecrire.toString() ;

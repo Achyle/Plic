@@ -8,26 +8,35 @@ public class Affectation extends DeclarationConstantes{
 
 	private String idf ,idf2;
 	private Expression e ;
+	private boolean Expression = true;
 	
 	public Affectation(String idf, Expression e) {
 		super();
 		this.idf = idf;
 		this.e = e;
+		Expression = true;
 	}
 	
 	public Affectation(String idf, String idf2) {
 		super();
 		this.idf = idf;
 		this.idf2 = idf2;
+		Expression = false;
 	}
 	
 	public String generer() throws PasDeDeclarationException{
 		 StringBuilder affectation = new StringBuilder();
-		 affectation.append("\n" + e.generer() + "\n");
-		 affectation.append("	# Affectation "+idf+" = "+e.valeur()+"\n"+
-				 			"	add $sp,$sp,4 \n" +
-		 					"	lw $v0,($sp) \n" +
-		 					"	sw $v0,"+ Tds.getInstance().identifier(idf).getDeplacement() +"($s7)\n");
+		 if(Expression){
+			 affectation.append("\n" + e.generer() + "\n");
+			 affectation.append("	# Affectation "+idf+" = "+e.valeur()+"\n"+
+					 			"	add $sp,$sp,4 \n" +
+			 					"	lw $v0,($sp) \n" +
+			 					"	sw $v0,"+ Tds.getInstance().identifier(idf).getDeplacement() +"($s7)\n");
+		 }else{
+			 affectation.append("	# Affectation "+idf+" = "+idf2+"\n"+
+			 					"	lw $v0,"+ Tds.getInstance().identifier(idf2).getDeplacement() +"($s7)\n" +
+			 					"	sw $v0,"+ Tds.getInstance().identifier(idf).getDeplacement() +"($s7)\n");
+		 }
 		 return affectation.toString() ;
 	}
 

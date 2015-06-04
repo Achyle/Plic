@@ -32,11 +32,6 @@ public class Plic {
 			pw = new PrintWriter(new BufferedWriter(new FileWriter(fichierDestination+".asm")));	
 			as = new AnalyseurSyntaxique(new AnalyseurLexical(new FileReader(fichierSource)));
 			arbre = (ArbreAbstrait) as.parse().value;
-			pw.write("# zone de reservation de memoire\n");
-			pw.write(".data\n");
-			pw.write("stri: .asciiz # Si le test concerne un boolean alors true = 1 et false = 0 \n\n");
-			pw.write("# zone programme\n");
-			pw.write(".text\n");
 			String res = arbre.generer();
 			pw.write(res+"\n");
 			

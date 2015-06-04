@@ -19,9 +19,6 @@ public class ListeDeclaration implements Iterable<Declaration>{
 
 	public String generer(){
 		StringBuilder strbr = new StringBuilder();
-		strbr.append("	# initialise s7 avec sp \n"); 
-		strbr.append("	la $s7,($sp) \n\n");
-		strbr.append("\n# zone programme\n");;
 		for(Declaration decl : listeDeclaration)
 			if(decl instanceof DeclarationConstantes){
 				try {
