@@ -42,11 +42,11 @@ parser code {:
         if (info instanceof java_cup.runtime.Symbol) {
             java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
             if (s.left >= 0) {                
-                mess = "ERREUR SYNTAXIQUE : "+(s.left+1)+" : "+Plic.derniereGrammaire;
+                mess = "ERREUR SYNTAXIQUE : ligne "+(s.left+1);
             }
         }
 		System.out.println(mess);
-        //System.exit(1);
+        System.exit(1);
     }
 :};
 
@@ -112,6 +112,10 @@ DECLARATION ::= DECL_CHAMP:d pointvirgule
 	{: 
 		Plic.derniereGrammaire = "DECLARATION CONST";
 		RESULT = d; 
+	:}
+	| DECL_CHAMP:d error
+	{:
+		System.out.println("On a catcher qui manquer un pointvirgule");
 	:};
 	
 DECL_CHAMP ::= statut:s type:t LIDF:l 
