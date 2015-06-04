@@ -13,7 +13,7 @@ import plic.arbre.Declaration;
 import plic.arbre.DeclarationChamps;
 import plic.arbre.DeclarationConstantes;
 import plic.arbre.EcrireChaine;
-import plic.arbre.EcrireIdentifiant;
+import plic.arbre.EcrireExpression;
 import plic.arbre.Lire;
 import plic.arbre.ListeDeclaration;
 import plic.arbre.ListeIdentifiant;
@@ -480,7 +480,7 @@ class CUP$AnalyseurSyntaxique$actions {
 		String i = (String)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
 		 
 		Plic.derniereGrammaire = "INSTECRIRE IDF";
-		RESULT = new EcrireIdentifiant(i); 
+		RESULT = new EcrireExpression(i); 
 	
               CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("INSTECRIRE",10, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
             }
