@@ -526,8 +526,9 @@ public class AnalyseurLexical implements java_cup.runtime.Scanner {
    *
    * @return      the next token
    * @exception   java.io.IOException  if any I/O-Error occurs
+ * @throws LexicalException 
    */
-  public Symbol next_token() throws java.io.IOException {
+  public Symbol next_token() throws java.io.IOException, LexicalException {
     int zzInput;
     int zzAction;
 

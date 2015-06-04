@@ -1,5 +1,6 @@
 package plic.arbre.expression;
 
+import plic.exception.semantique.PasDeDeclarationException;
 import plic.exception.semantique.TypeIncompatibleException;
 
 
@@ -10,7 +11,7 @@ public class Different extends Binaire{
 	}
 
 	@Override
-	public String generer(){
+	public String generer() throws PasDeDeclarationException{
 		incCptEtiquette();
 		return this.gauche.generer()+"\n" + this.droite.generer()+ "\n" +
 	           "	# Compare "+this.toString()+"\n"+	           
