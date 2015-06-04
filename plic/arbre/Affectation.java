@@ -4,12 +4,13 @@ import plic.arbre.expression.Expression;
 import plic.arbre.tds.Tds;
 import plic.exception.PasDeDeclarationException;
 
-public class Affectation {
+public class Affectation extends Instruction{
 
 	private String idf ;
 	private Expression e ;
 	
 	public Affectation(String idf, Expression e) {
+		super();
 		this.idf = idf;
 		this.e = e;
 	}
