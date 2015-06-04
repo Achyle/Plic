@@ -1,9 +1,14 @@
 package plic.analyse;
 
+import plic.arbre.Affectation;
 import plic.arbre.ArbreAbstrait;
 import plic.arbre.Classe;
 import plic.arbre.Declaration;
 import plic.arbre.DeclarationChamps;
+import plic.arbre.DeclarationConstantes;
+import plic.arbre.EcrireChaine;
+import plic.arbre.EcrireIdentifiant;
+import plic.arbre.Lire;
 import plic.arbre.ListeDeclaration;
 import plic.arbre.ListeIdentifiant;
 import plic.arbre.expression.Different;
@@ -44,19 +49,23 @@ parser code {:
     }
 :};
 
-terminal String cste_ent, parenthese_ouvert, parenthese_fermer, plus, moins, fois, diviser, inf, sup, egale;
-terminal String different, bool, classe, fin, pointvirgule, idf, statut, type, virgule;
+terminal String cste_ent, cste_chaine, parenthese_ouvert, parenthese_fermer, plus, moins, fois, diviser, inf, sup, test_egale;
+terminal String test_different, bool, classe, fin, pointvirgule, idf, statut, type, virgule, ecrire, lire, egale;
 
 non terminal ArbreAbstrait SYSTEME;
 non terminal Classe CLASSE;
 non terminal ListeDeclaration LDECL;
 non terminal Declaration DECLARATION;
 non terminal DeclarationChamps DECL_CHAMP;
+non terminal DeclarationConstantes DECL_CONST;
 non terminal ListeIdentifiant LIDF;
+non terminal Affectation AFFECT;
 non terminal Expression EXP;
+non terminal Lire INSTLIRE;
+non terminal DeclarationConstantes INSTECRIRE;
 
 precedence left bool;
-precedence left inf, sup, egale, different;
+precedence left inf, sup, test_egale, test_different;
 precedence left plus, moins;
 precedence left fois, diviser;
 
@@ -66,7 +75,9 @@ SYSTEME	::= CLASSE:c
 	{: RESULT = new ArbreAbstrait(c); :};
 	
 CLASSE ::= classe idf:i LDECL:l fin
-	{: RESULT = new Classe(l,i); :};
+	{: RESULT = new Classe(l,i); :}
+	| classe idf:i fin
+	{: RESULT = new Classe(null,i); :};
 
 LDECL ::= LDECL:l DECLARATION:d
 	{: 	l.ajouterDeclaration(d);
@@ -77,9 +88,11 @@ LDECL ::= LDECL:l DECLARATION:d
 		RESULT = l; :};
 	
 DECLARATION ::= DECL_CHAMP:d pointvirgule
+	{: RESULT = d; :}
+	| DECL_CONST:d pointvirgule
 	{: RESULT = d; :};
 	
-DECL_CHAMP ::= statut:s type:t LIDF:l
+DECL_CHAMP ::= statut:s type:t LIDF:l 
 	{: RESULT = new DeclarationChamps(s,t,l); :};
 
 LIDF ::= LIDF:l virgule idf:i
@@ -90,38 +103,45 @@ LIDF ::= LIDF:l virgule idf:i
 		l.ajouterIdentifiant(i);
 		RESULT = l; :};
 	
+DECL_CONST ::= AFFECT:a
+	{: RESULT = a; :}
+	| INSTLIRE:i
+	{: RESULT = i; :}
+	| INSTECRIRE:i
+	{: RESULT = i; :};
+	
+AFFECT ::=  idf:i egale EXP:e 
+	{: RESULT = new Affectation(i,e); :};
+	
+INSTLIRE ::= lire idf:i
+	{: RESULT = new Lire(i); :};
+
+INSTECRIRE ::= ecrire idf:i
+	{: RESULT = new EcrireIdentifiant(i); :}
+	| ecrire cste_chaine:c
+	{: RESULT = new EcrireChaine(c); :};
 
 EXP ::= cste_ent:cste
 	  	{: RESULT = new Unaire(Integer.parseInt(""+cste),false); :}
 	| parenthese_ouvert EXP:e parenthese_fermer
 	  {: RESULT = e; :}
-	
 	| moins EXP:e
 	  {: RESULT = new Multiplication(new Unaire(-1,false),e); :}
-	
 	| EXP:e1 plus EXP:e2
 	  {: RESULT = new Somme(e1,e2); :}
-	
 	| EXP:e1 moins EXP:e2
 	  {: RESULT = new Soustraction(e1,e2); :}
-	
 	| EXP:e1 fois EXP:e2
 	  {: RESULT = new Multiplication(e1,e2); :}
-	
 	| EXP:e1 diviser EXP:e2
 	  {: RESULT = new Division(e1,e2); :}
-	
 	| EXP:e1 inf EXP:e2
 	  {: RESULT=new Inferieur(e1,e2); :}
-	
 	| EXP:e1 sup EXP:e2
 	  {: RESULT=new Superieur(e1,e2); :}
-	
-	| EXP:e1 egale EXP:e2
+	| EXP:e1 test_egale EXP:e2
 	  {: RESULT=new Egale(e1,e2); :}
-	
-	| EXP:e1 different EXP:e2
+	| EXP:e1 test_different EXP:e2
 	  {: RESULT=new Different(e1,e2); :}
-	
 	| bool:b
 	  {: RESULT=new Unaire(b=="vrai"?1:0,true); :};

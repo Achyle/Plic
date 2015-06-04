@@ -5,10 +5,15 @@
 
 package plic.analyse;
 
+import plic.arbre.Affectation;
 import plic.arbre.ArbreAbstrait;
 import plic.arbre.Classe;
 import plic.arbre.Declaration;
 import plic.arbre.DeclarationChamps;
+import plic.arbre.DeclarationConstantes;
+import plic.arbre.EcrireChaine;
+import plic.arbre.EcrireIdentifiant;
+import plic.arbre.Lire;
 import plic.arbre.ListeDeclaration;
 import plic.arbre.ListeIdentifiant;
 import plic.arbre.expression.Different;
@@ -46,13 +51,16 @@ public class AnalyseurSyntaxique extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\025\000\002\002\004\000\002\002\003\000\002\003" +
-    "\006\000\002\004\004\000\002\004\003\000\002\005\004" +
-    "\000\002\006\005\000\002\007\005\000\002\007\003\000" +
-    "\002\010\003\000\002\010\005\000\002\010\004\000\002" +
-    "\010\005\000\002\010\005\000\002\010\005\000\002\010" +
-    "\005\000\002\010\005\000\002\010\005\000\002\010\005" +
-    "\000\002\010\005\000\002\010\003" });
+    "\000\036\000\002\002\004\000\002\002\003\000\002\003" +
+    "\006\000\002\003\005\000\002\004\004\000\002\004\003" +
+    "\000\002\005\004\000\002\005\004\000\002\006\005\000" +
+    "\002\010\005\000\002\010\003\000\002\007\003\000\002" +
+    "\007\003\000\002\007\003\000\002\011\005\000\002\013" +
+    "\004\000\002\014\004\000\002\014\004\000\002\012\003" +
+    "\000\002\012\005\000\002\012\004\000\002\012\005\000" +
+    "\002\012\005\000\002\012\005\000\002\012\005\000\002" +
+    "\012\005\000\002\012\005\000\002\012\005\000\002\012" +
+    "\005\000\002\012\003" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -60,16 +68,61 @@ public class AnalyseurSyntaxique extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\022\000\004\020\006\001\002\000\004\002\000\001" +
-    "\002\000\004\002\024\001\002\000\004\023\007\001\002" +
-    "\000\004\024\010\001\002\000\004\025\017\001\002\000" +
-    "\006\021\016\024\010\001\002\000\004\022\014\001\002" +
-    "\000\006\021\ufffd\024\ufffd\001\002\000\006\021\ufffc\024" +
-    "\ufffc\001\002\000\006\021\ufffe\024\ufffe\001\002\000\004" +
-    "\002\uffff\001\002\000\004\023\021\001\002\000\006\022" +
-    "\ufffb\026\022\001\002\000\006\022\ufff9\026\ufff9\001\002" +
-    "\000\004\023\023\001\002\000\006\022\ufffa\026\ufffa\001" +
-    "\002\000\004\002\001\001\002" });
+    "\000\067\000\004\021\006\001\002\000\004\002\000\001" +
+    "\002\000\004\002\071\001\002\000\004\024\007\001\002" +
+    "\000\014\022\023\024\017\025\013\030\014\031\016\001" +
+    "\002\000\004\023\070\001\002\000\014\022\067\024\017" +
+    "\025\013\030\014\031\016\001\002\000\004\023\065\001" +
+    "\002\000\004\026\060\001\002\000\006\005\056\024\057" +
+    "\001\002\000\004\023\ufff6\001\002\000\004\024\055\001" +
+    "\002\000\004\032\024\001\002\000\004\023\ufff4\001\002" +
+    "\000\004\023\ufff5\001\002\000\014\022\ufffc\024\ufffc\025" +
+    "\ufffc\030\ufffc\031\ufffc\001\002\000\004\002\ufffe\001\002" +
+    "\000\012\004\031\006\026\011\027\020\025\001\002\000" +
+    "\026\007\uffe4\010\uffe4\011\uffe4\012\uffe4\013\uffe4\014\uffe4" +
+    "\015\uffe4\016\uffe4\017\uffe4\023\uffe4\001\002\000\012\004" +
+    "\031\006\026\011\027\020\025\001\002\000\012\004\031" +
+    "\006\026\011\027\020\025\001\002\000\024\010\040\011" +
+    "\035\012\034\013\032\014\036\015\033\016\037\017\041" +
+    "\023\ufff3\001\002\000\026\007\uffef\010\uffef\011\uffef\012" +
+    "\uffef\013\uffef\014\uffef\015\uffef\016\uffef\017\uffef\023\uffef" +
+    "\001\002\000\012\004\031\006\026\011\027\020\025\001" +
+    "\002\000\012\004\031\006\026\011\027\020\025\001\002" +
+    "\000\012\004\031\006\026\011\027\020\025\001\002\000" +
+    "\012\004\031\006\026\011\027\020\025\001\002\000\012" +
+    "\004\031\006\026\011\027\020\025\001\002\000\012\004" +
+    "\031\006\026\011\027\020\025\001\002\000\012\004\031" +
+    "\006\026\011\027\020\025\001\002\000\012\004\031\006" +
+    "\026\011\027\020\025\001\002\000\026\007\uffe5\010\040" +
+    "\011\035\012\034\013\032\014\uffe5\015\uffe5\016\uffe5\017" +
+    "\uffe5\023\uffe5\001\002\000\026\007\uffec\010\uffec\011\uffec" +
+    "\012\034\013\032\014\uffec\015\uffec\016\uffec\017\uffec\023" +
+    "\uffec\001\002\000\026\007\uffe6\010\040\011\035\012\034" +
+    "\013\032\014\uffe6\015\uffe6\016\uffe6\017\uffe6\023\uffe6\001" +
+    "\002\000\026\007\uffe8\010\040\011\035\012\034\013\032" +
+    "\014\uffe8\015\uffe8\016\uffe8\017\uffe8\023\uffe8\001\002\000" +
+    "\026\007\uffeb\010\uffeb\011\uffeb\012\034\013\032\014\uffeb" +
+    "\015\uffeb\016\uffeb\017\uffeb\023\uffeb\001\002\000\026\007" +
+    "\uffea\010\uffea\011\uffea\012\uffea\013\uffea\014\uffea\015\uffea" +
+    "\016\uffea\017\uffea\023\uffea\001\002\000\026\007\uffe7\010" +
+    "\040\011\035\012\034\013\032\014\uffe7\015\uffe7\016\uffe7" +
+    "\017\uffe7\023\uffe7\001\002\000\026\007\uffe9\010\uffe9\011" +
+    "\uffe9\012\uffe9\013\uffe9\014\uffe9\015\uffe9\016\uffe9\017\uffe9" +
+    "\023\uffe9\001\002\000\026\007\uffed\010\uffed\011\uffed\012" +
+    "\034\013\032\014\uffed\015\uffed\016\uffed\017\uffed\023\uffed" +
+    "\001\002\000\024\007\054\010\040\011\035\012\034\013" +
+    "\032\014\036\015\033\016\037\017\041\001\002\000\026" +
+    "\007\uffee\010\uffee\011\uffee\012\uffee\013\uffee\014\uffee\015" +
+    "\uffee\016\uffee\017\uffee\023\uffee\001\002\000\004\023\ufff2" +
+    "\001\002\000\004\023\ufff0\001\002\000\004\023\ufff1\001" +
+    "\002\000\004\024\062\001\002\000\006\023\ufff9\027\063" +
+    "\001\002\000\006\023\ufff7\027\ufff7\001\002\000\004\024" +
+    "\064\001\002\000\006\023\ufff8\027\ufff8\001\002\000\014" +
+    "\022\ufffb\024\ufffb\025\ufffb\030\ufffb\031\ufffb\001\002\000" +
+    "\014\022\ufffd\024\ufffd\025\ufffd\030\ufffd\031\ufffd\001\002" +
+    "\000\004\002\uffff\001\002\000\014\022\ufffa\024\ufffa\025" +
+    "\ufffa\030\ufffa\031\ufffa\001\002\000\004\002\001\001\002" +
+    "" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -77,13 +130,28 @@ public class AnalyseurSyntaxique extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\022\000\006\002\004\003\003\001\001\000\002\001" +
-    "\001\000\002\001\001\000\002\001\001\000\010\004\010" +
-    "\005\012\006\011\001\001\000\002\001\001\000\006\005" +
-    "\014\006\011\001\001\000\002\001\001\000\002\001\001" +
+    "\000\067\000\006\002\004\003\003\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\020\004\010" +
+    "\005\021\006\011\007\007\011\014\013\020\014\017\001" +
+    "\001\000\002\001\001\000\016\005\065\006\011\007\007" +
+    "\011\014\013\020\014\017\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\004\012\027" +
+    "\001\001\000\002\001\001\000\004\012\052\001\001\000" +
+    "\004\012\051\001\001\000\002\001\001\000\002\001\001" +
+    "\000\004\012\050\001\001\000\004\012\047\001\001\000" +
+    "\004\012\046\001\001\000\004\012\045\001\001\000\004" +
+    "\012\044\001\001\000\004\012\043\001\001\000\004\012" +
+    "\042\001\001\000\004\012\041\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\004\007\017\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001\000\002\001\001" });
+    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\004\010\060\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -214,7 +282,19 @@ class CUP$AnalyseurSyntaxique$actions {
           return CUP$AnalyseurSyntaxique$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 3: // LDECL ::= LDECL DECLARATION 
+          case 3: // CLASSE ::= classe idf fin 
+            {
+              Classe RESULT =null;
+		int ileft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)).left;
+		int iright = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)).right;
+		String i = (String)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)).value;
+		 RESULT = new Classe(null,i); 
+              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("CLASSE",1, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
+            }
+          return CUP$AnalyseurSyntaxique$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 4: // LDECL ::= LDECL DECLARATION 
             {
               ListeDeclaration RESULT =null;
 		int lleft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)).left;
@@ -230,7 +310,7 @@ class CUP$AnalyseurSyntaxique$actions {
           return CUP$AnalyseurSyntaxique$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 4: // LDECL ::= DECLARATION 
+          case 5: // LDECL ::= DECLARATION 
             {
               ListeDeclaration RESULT =null;
 		int dleft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).left;
@@ -244,7 +324,7 @@ class CUP$AnalyseurSyntaxique$actions {
           return CUP$AnalyseurSyntaxique$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 5: // DECLARATION ::= DECL_CHAMP pointvirgule 
+          case 6: // DECLARATION ::= DECL_CHAMP pointvirgule 
             {
               Declaration RESULT =null;
 		int dleft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)).left;
@@ -256,7 +336,19 @@ class CUP$AnalyseurSyntaxique$actions {
           return CUP$AnalyseurSyntaxique$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 6: // DECL_CHAMP ::= statut type LIDF 
+          case 7: // DECLARATION ::= DECL_CONST pointvirgule 
+            {
+              Declaration RESULT =null;
+		int dleft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)).left;
+		int dright = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)).right;
+		DeclarationConstantes d = (DeclarationConstantes)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)).value;
+		 RESULT = d; 
+              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("DECLARATION",3, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
+            }
+          return CUP$AnalyseurSyntaxique$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 8: // DECL_CHAMP ::= statut type LIDF 
             {
               DeclarationChamps RESULT =null;
 		int sleft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)).left;
@@ -274,7 +366,7 @@ class CUP$AnalyseurSyntaxique$actions {
           return CUP$AnalyseurSyntaxique$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 7: // LIDF ::= LIDF virgule idf 
+          case 9: // LIDF ::= LIDF virgule idf 
             {
               ListeIdentifiant RESULT =null;
 		int lleft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)).left;
@@ -285,12 +377,12 @@ class CUP$AnalyseurSyntaxique$actions {
 		String i = (String)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
 		 	l.ajouterIdentifiant(i);
 		RESULT = l; 
-              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("LIDF",5, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
+              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("LIDF",6, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
             }
           return CUP$AnalyseurSyntaxique$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 8: // LIDF ::= idf 
+          case 10: // LIDF ::= idf 
             {
               ListeIdentifiant RESULT =null;
 		int ileft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).left;
@@ -299,48 +391,135 @@ class CUP$AnalyseurSyntaxique$actions {
 		 	ListeIdentifiant l = new ListeIdentifiant();
 		l.ajouterIdentifiant(i);
 		RESULT = l; 
-              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("LIDF",5, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
+              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("LIDF",6, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
             }
           return CUP$AnalyseurSyntaxique$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 9: // EXP ::= cste_ent 
+          case 11: // DECL_CONST ::= AFFECT 
+            {
+              DeclarationConstantes RESULT =null;
+		int aleft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).right;
+		Affectation a = (Affectation)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
+		 RESULT = a; 
+              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("DECL_CONST",5, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
+            }
+          return CUP$AnalyseurSyntaxique$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 12: // DECL_CONST ::= INSTLIRE 
+            {
+              DeclarationConstantes RESULT =null;
+		int ileft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).left;
+		int iright = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).right;
+		Lire i = (Lire)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
+		 RESULT = i; 
+              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("DECL_CONST",5, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
+            }
+          return CUP$AnalyseurSyntaxique$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 13: // DECL_CONST ::= INSTECRIRE 
+            {
+              DeclarationConstantes RESULT =null;
+		int ileft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).left;
+		int iright = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).right;
+		DeclarationConstantes i = (DeclarationConstantes)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
+		 RESULT = i; 
+              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("DECL_CONST",5, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
+            }
+          return CUP$AnalyseurSyntaxique$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 14: // AFFECT ::= idf egale EXP 
+            {
+              Affectation RESULT =null;
+		int ileft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)).left;
+		int iright = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)).right;
+		String i = (String)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)).value;
+		int eleft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).right;
+		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
+		 RESULT = new Affectation(i,e); 
+              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("AFFECT",7, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
+            }
+          return CUP$AnalyseurSyntaxique$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 15: // INSTLIRE ::= lire idf 
+            {
+              Lire RESULT =null;
+		int ileft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).left;
+		int iright = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).right;
+		String i = (String)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
+		 RESULT = new Lire(i); 
+              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("INSTLIRE",9, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
+            }
+          return CUP$AnalyseurSyntaxique$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 16: // INSTECRIRE ::= ecrire idf 
+            {
+              DeclarationConstantes RESULT =null;
+		int ileft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).left;
+		int iright = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).right;
+		String i = (String)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
+		 RESULT = new EcrireIdentifiant(i); 
+              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("INSTECRIRE",10, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
+            }
+          return CUP$AnalyseurSyntaxique$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 17: // INSTECRIRE ::= ecrire cste_chaine 
+            {
+              DeclarationConstantes RESULT =null;
+		int cleft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).left;
+		int cright = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).right;
+		String c = (String)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
+		 RESULT = new EcrireChaine(c); 
+              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("INSTECRIRE",10, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
+            }
+          return CUP$AnalyseurSyntaxique$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 18: // EXP ::= cste_ent 
             {
               Expression RESULT =null;
 		int csteleft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).left;
 		int csteright = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).right;
 		String cste = (String)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
 		 RESULT = new Unaire(Integer.parseInt(""+cste),false); 
-              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("EXP",6, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
+              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("EXP",8, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
             }
           return CUP$AnalyseurSyntaxique$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 10: // EXP ::= parenthese_ouvert EXP parenthese_fermer 
+          case 19: // EXP ::= parenthese_ouvert EXP parenthese_fermer 
             {
               Expression RESULT =null;
 		int eleft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)).right;
 		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)).value;
 		 RESULT = e; 
-              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("EXP",6, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
+              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("EXP",8, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
             }
           return CUP$AnalyseurSyntaxique$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 11: // EXP ::= moins EXP 
+          case 20: // EXP ::= moins EXP 
             {
               Expression RESULT =null;
 		int eleft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).right;
 		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
 		 RESULT = new Multiplication(new Unaire(-1,false),e); 
-              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("EXP",6, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
+              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("EXP",8, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
             }
           return CUP$AnalyseurSyntaxique$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 12: // EXP ::= EXP plus EXP 
+          case 21: // EXP ::= EXP plus EXP 
             {
               Expression RESULT =null;
 		int e1left = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)).left;
@@ -350,12 +529,12 @@ class CUP$AnalyseurSyntaxique$actions {
 		int e2right = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
 		 RESULT = new Somme(e1,e2); 
-              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("EXP",6, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
+              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("EXP",8, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
             }
           return CUP$AnalyseurSyntaxique$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 13: // EXP ::= EXP moins EXP 
+          case 22: // EXP ::= EXP moins EXP 
             {
               Expression RESULT =null;
 		int e1left = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)).left;
@@ -365,12 +544,12 @@ class CUP$AnalyseurSyntaxique$actions {
 		int e2right = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
 		 RESULT = new Soustraction(e1,e2); 
-              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("EXP",6, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
+              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("EXP",8, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
             }
           return CUP$AnalyseurSyntaxique$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 14: // EXP ::= EXP fois EXP 
+          case 23: // EXP ::= EXP fois EXP 
             {
               Expression RESULT =null;
 		int e1left = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)).left;
@@ -380,12 +559,12 @@ class CUP$AnalyseurSyntaxique$actions {
 		int e2right = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
 		 RESULT = new Multiplication(e1,e2); 
-              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("EXP",6, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
+              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("EXP",8, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
             }
           return CUP$AnalyseurSyntaxique$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 15: // EXP ::= EXP diviser EXP 
+          case 24: // EXP ::= EXP diviser EXP 
             {
               Expression RESULT =null;
 		int e1left = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)).left;
@@ -395,12 +574,12 @@ class CUP$AnalyseurSyntaxique$actions {
 		int e2right = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
 		 RESULT = new Division(e1,e2); 
-              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("EXP",6, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
+              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("EXP",8, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
             }
           return CUP$AnalyseurSyntaxique$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 16: // EXP ::= EXP inf EXP 
+          case 25: // EXP ::= EXP inf EXP 
             {
               Expression RESULT =null;
 		int e1left = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)).left;
@@ -410,12 +589,12 @@ class CUP$AnalyseurSyntaxique$actions {
 		int e2right = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
 		 RESULT=new Inferieur(e1,e2); 
-              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("EXP",6, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
+              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("EXP",8, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
             }
           return CUP$AnalyseurSyntaxique$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 17: // EXP ::= EXP sup EXP 
+          case 26: // EXP ::= EXP sup EXP 
             {
               Expression RESULT =null;
 		int e1left = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)).left;
@@ -425,12 +604,12 @@ class CUP$AnalyseurSyntaxique$actions {
 		int e2right = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
 		 RESULT=new Superieur(e1,e2); 
-              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("EXP",6, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
+              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("EXP",8, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
             }
           return CUP$AnalyseurSyntaxique$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 18: // EXP ::= EXP egale EXP 
+          case 27: // EXP ::= EXP test_egale EXP 
             {
               Expression RESULT =null;
 		int e1left = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)).left;
@@ -440,12 +619,12 @@ class CUP$AnalyseurSyntaxique$actions {
 		int e2right = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
 		 RESULT=new Egale(e1,e2); 
-              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("EXP",6, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
+              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("EXP",8, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
             }
           return CUP$AnalyseurSyntaxique$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 19: // EXP ::= EXP different EXP 
+          case 28: // EXP ::= EXP test_different EXP 
             {
               Expression RESULT =null;
 		int e1left = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)).left;
@@ -455,19 +634,19 @@ class CUP$AnalyseurSyntaxique$actions {
 		int e2right = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).right;
 		Expression e2 = (Expression)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
 		 RESULT=new Different(e1,e2); 
-              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("EXP",6, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
+              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("EXP",8, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-2)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
             }
           return CUP$AnalyseurSyntaxique$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 20: // EXP ::= bool 
+          case 29: // EXP ::= bool 
             {
               Expression RESULT =null;
 		int bleft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).left;
 		int bright = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()).right;
 		String b = (String)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.peek()).value;
 		 RESULT=new Unaire(b=="vrai"?1:0,true); 
-              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("EXP",6, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
+              CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("EXP",8, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
             }
           return CUP$AnalyseurSyntaxique$result;
 

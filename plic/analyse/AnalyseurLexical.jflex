@@ -33,17 +33,20 @@ bool = vrai | faux
 idf = [a-zA-Z][a-zA-Z0-9]*
 statut = publique | privee
 type = entier
-cstchaine = \"[^;]*\"
+chaine = \"[^;]*\"
 LineTerminator= \r|\n|\r\n
 
 %%
 
 <YYINITIAL> "classe" 	{ return symbol(CodesLexicaux.classe); }
+<YYINITIAL> "ecrire" 	{ return symbol(CodesLexicaux.ecrire); }
+<YYINITIAL> "lire" 		{ return symbol(CodesLexicaux.lire); }
 <YYINITIAL> "fin" 		{ return symbol(CodesLexicaux.fin); }
 <YYINITIAL> {entier} 	{ return symbol(CodesLexicaux.cste_ent, yytext()); }
 <YYINITIAL> {statut} 	{ return symbol(CodesLexicaux.statut, yytext()); }
 <YYINITIAL> {type} 		{ return symbol(CodesLexicaux.type, yytext()); }
 <YYINITIAL> {bool} 		{ return symbol(CodesLexicaux.bool, yytext()); }
+<YYINITIAL> {chaine} 		{ return symbol(CodesLexicaux.cste_chaine, yytext()); }
 <YYINITIAL> {idf} 		{ return symbol(CodesLexicaux.idf, yytext()); }
 <YYINITIAL> "+" 	 	{ return symbol(CodesLexicaux.plus); }
 <YYINITIAL> "-" 	 	{ return symbol(CodesLexicaux.moins); }
@@ -51,8 +54,9 @@ LineTerminator= \r|\n|\r\n
 <YYINITIAL> "/"			{ return symbol(CodesLexicaux.diviser); }
 <YYINITIAL> "<" 	 	{ return symbol(CodesLexicaux.inf); }
 <YYINITIAL> ">" 	 	{ return symbol(CodesLexicaux.sup); }
-<YYINITIAL> "==" 	 	{ return symbol(CodesLexicaux.egale); }
-<YYINITIAL> "!=" 		{ return symbol(CodesLexicaux.different); }
+<YYINITIAL> "==" 	 	{ return symbol(CodesLexicaux.test_egale); }
+<YYINITIAL> "!=" 		{ return symbol(CodesLexicaux.test_different); }
+<YYINITIAL> "=" 	 	{ return symbol(CodesLexicaux.egale); }
 <YYINITIAL> "(" 		{ return symbol(CodesLexicaux.parenthese_ouvert); }
 <YYINITIAL> ")" 		{ return symbol(CodesLexicaux.parenthese_fermer); }
 <YYINITIAL> ";" 		{ return symbol(CodesLexicaux.pointvirgule); }
