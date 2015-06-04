@@ -1,5 +1,6 @@
 package plic.arbre.expression;
 
+import plic.exception.semantique.PasDeDeclarationException;
 import plic.exception.semantique.TypeIncompatibleException;
 
 public class Somme extends Binaire{
@@ -9,7 +10,7 @@ public class Somme extends Binaire{
 	}
 
 	@Override
-	public String generer(){
+	public String generer() throws PasDeDeclarationException{
 		return this.gauche.generer()+"\n" + this.droite.generer()+ "\n" +
 	           "	# additionne "+this.toString()+"\n"+
 	      	   "	add $sp,$sp,4\n" +	

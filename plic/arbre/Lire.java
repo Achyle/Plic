@@ -19,7 +19,7 @@ public class Lire extends DeclarationConstantes {
 		cpt = Expression.cptEtiquette;
 		StringBuilder lire = new StringBuilder(); 
 		lire.append("\n.data \n");
-		lire.append("fonc"+cpt+": .asciiz \"Saisissez un entier pour " + idf +"/\n \n");
+		lire.append("fonc"+cpt+": .asciiz \"Saisissez un entier pour " + idf +" : /\n \n");
 		lire.append(".text \n");
 		lire.append("	li $v0, 4 \n");
 		lire.append("	la $a0, fonc"+cpt+" \n");
