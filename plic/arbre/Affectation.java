@@ -6,7 +6,7 @@ import plic.exception.semantique.PasDeDeclarationException;
 
 public class Affectation extends DeclarationConstantes{
 
-	private String idf ;
+	private String idf ,idf2;
 	private Expression e ;
 	
 	public Affectation(String idf, Expression e) {
@@ -15,10 +15,17 @@ public class Affectation extends DeclarationConstantes{
 		this.e = e;
 	}
 	
+	public Affectation(String idf, String idf2) {
+		super();
+		this.idf = idf;
+		this.idf2 = idf2;
+	}
+	
 	public String generer() throws PasDeDeclarationException{
 		 StringBuilder affectation = new StringBuilder();
 		 affectation.append("\n" + e.generer() + "\n");
-		 affectation.append("	add $sp,$sp,4 \n" +
+		 affectation.append("	# Affectation "+idf+" = "+e.valeur()+"\n"+
+				 			"	add $sp,$sp,4 \n" +
 		 					"	lw $v0,($sp) \n" +
 		 					"	sw $v0,"+ Tds.getInstance().identifier(idf).getDeplacement() +"($s7)\n");
 		 return affectation.toString() ;
