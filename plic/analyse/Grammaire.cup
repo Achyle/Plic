@@ -34,7 +34,11 @@ parser code {:
 	}
 
     public void report_error(String message, Object info) {
-        String mess = "";
+        
+    }
+
+    public void report_fatal_error(String message, Object info) {
+    	String mess = "";
         if (info instanceof java_cup.runtime.Symbol) {
             java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
             if (s.left >= 0) {                
@@ -42,10 +46,7 @@ parser code {:
             }
         }
 		System.out.println(mess);
-    }
-
-    public void report_fatal_error(String message, Object info) {
-        System.exit(1);
+        //System.exit(1);
     }
 :};
 
