@@ -16,6 +16,8 @@ public class Plic {
 	private String fichierSource;
 	private String fichierDestination;
 	
+	public static String derniereGrammaire = "";
+	
 	public Plic(String fs,String fr ){
 		fichierSource = fs;
 		fichierDestination = fr;

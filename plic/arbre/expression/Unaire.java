@@ -9,6 +9,9 @@ public class Unaire extends Expression {
 		type = isBoolean?TypeExpression.BOOLEAN:TypeExpression.ARITHMETIQUE;
 	}
 
+	public Unaire(String i) {
+	}
+
 	public String generer() {
 		return "	# Range "+ this.valeur +" dans $v0 et l'empile\n" +
 				   "	li $v0, " + this.valeur + "\n" +
