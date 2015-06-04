@@ -1,11 +1,12 @@
 package plic.arbre;
 
-public class DeclarationConstantes {
+import plic.arbre.expression.Expression;
+import plic.exception.PasDeDeclarationException;
 	
-	protected ListeInstruction listeInstruction;
-	
-	public DeclarationConstantes (ListeInstruction listeInstruction){
-		this.listeInstruction = listeInstruction;
+public abstract class DeclarationConstantes{
+	public static int cptEtiquette = 0;
+	public void incCptEtiquette(){
+		Expression.cptEtiquette++;
 	}
-
+	public abstract String generer() throws PasDeDeclarationException;
 }
