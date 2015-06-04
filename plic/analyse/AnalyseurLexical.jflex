@@ -32,7 +32,7 @@ entier = [0-9]+
 bool = vrai | faux
 idf = [a-zA-Z][a-zA-Z0-9]*
 statut = publique | privee
-type = entier
+type = entier|booleen
 chaine = \"[^;]*\"
 commentaireSlashSlash = [/][/].*
 

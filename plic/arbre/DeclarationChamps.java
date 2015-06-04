@@ -21,7 +21,7 @@ public class DeclarationChamps extends Declaration{
 		
 		if(t.equals("entier"))
 			type = Type.ENTIER;
-		else if(t.equals("boolean"))
+		else if(t.equals("booleen"))
 			type = Type.BOOLEAN;
 		this.listeIdentifiant = listeIdentifiant;
 		for (String idf : listeIdentifiant) {

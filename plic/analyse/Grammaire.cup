@@ -7,7 +7,7 @@ import plic.arbre.Declaration;
 import plic.arbre.DeclarationChamps;
 import plic.arbre.DeclarationConstantes;
 import plic.arbre.EcrireChaine;
-import plic.arbre.EcrireIdentifiant;
+import plic.arbre.EcrireExpression;
 import plic.arbre.Lire;
 import plic.arbre.ListeDeclaration;
 import plic.arbre.ListeIdentifiant;
@@ -166,10 +166,10 @@ INSTLIRE ::= lire idf:i
 		RESULT = new Lire(i); 
 	:};
 
-INSTECRIRE ::= ecrire idf:i
+INSTECRIRE ::= ecrire EXP:e
 	{: 
-		Plic.derniereGrammaire = "INSTECRIRE IDF";
-		RESULT = new EcrireIdentifiant(i); 
+		Plic.derniereGrammaire = "INSTECRIRE EXP";
+		RESULT = new EcrireExpression(e); 
 	:}
 	| ecrire cste_chaine:c
 	{:
