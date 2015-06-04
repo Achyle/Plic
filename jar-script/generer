@@ -3,15 +3,17 @@
 
 #test des parametres.
 # entrée pour les tests
+set cup = java-cup-11a.jar;
+
 set analyseurLexicalPath = plic/analyse/AnalyseurLexical.jflex
 set grammairePath = plic/analyse/Grammaire.cup
-set jarCupPath = jar-script/java-cup-11b.jar
+set jarCupPath = jar-script/$cup
 set jarJflexPath = jar-script/jflex-1.6.1.jar
 
 # entrée pour l'execution
 set analyseurLexical = AnalyseurLexical.jflex
 set grammaire = Grammaire.cup
-set jarCup = ../../jar-script/java-cup-11b.jar
+set jarCup = ../../jar-script/$cup
 set jarJflex = ../../jar-script/jflex-1.6.1.jar
 set analyseurSyntaxique = AnalyseurSyntaxique
 set codeLexicaux = CodesLexicaux
@@ -49,7 +51,7 @@ endif
 #deplacement dans le bon dossier
 cd plic/analyse/
 
-echo "generation du cup"
+echo "generation du cup avec $cup"
 
 java -jar $jarCup -parser $analyseurSyntaxique -symbols $codeLexicaux $grammaire
 echo "generation du jflex"
