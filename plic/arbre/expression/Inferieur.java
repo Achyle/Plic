@@ -9,6 +9,7 @@ public class Inferieur extends Binaire{
 	
 	public Inferieur(Expression expGauche, Expression expDroite) throws TypeIncompatibleException{
 		super(expGauche,expDroite);
+		type = TypeExpression.BOOLEAN;
 	}
 
 	@Override

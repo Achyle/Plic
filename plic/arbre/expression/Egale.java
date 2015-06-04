@@ -1,5 +1,6 @@
 package plic.arbre.expression;
 
+import plic.arbre.expression.Expression.TypeExpression;
 import plic.exception.semantique.PasDeDeclarationException;
 import plic.exception.semantique.TypeIncompatibleException;
 
@@ -8,6 +9,7 @@ public class Egale extends Binaire{
 	private int cpt = 0;
 	public Egale(Expression expGauche, Expression expDroite) throws TypeIncompatibleException{
 		super(expGauche,expDroite);
+		type = TypeExpression.BOOLEAN;
 	}
 
 	@Override
