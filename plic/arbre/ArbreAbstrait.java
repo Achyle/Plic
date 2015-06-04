@@ -2,7 +2,7 @@ package plic.arbre;
 
 import java.util.ArrayList;
 
-import plic.exception.PasDeDeclarationException;
+import plic.exception.semantique.PasDeDeclarationException;
 
 public class ArbreAbstrait {
 	

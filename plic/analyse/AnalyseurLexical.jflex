@@ -35,7 +35,6 @@ statut = publique | privee
 type = entier
 chaine = \"[^;]*\"
 LineTerminator= \r|\n|\r\n
-
 %%
 
 <YYINITIAL> "classe" 	{ return symbol(CodesLexicaux.classe); }
@@ -46,7 +45,7 @@ LineTerminator= \r|\n|\r\n
 <YYINITIAL> {statut} 	{ return symbol(CodesLexicaux.statut, yytext()); }
 <YYINITIAL> {type} 		{ return symbol(CodesLexicaux.type, yytext()); }
 <YYINITIAL> {bool} 		{ return symbol(CodesLexicaux.bool, yytext()); }
-<YYINITIAL> {chaine} 		{ return symbol(CodesLexicaux.cste_chaine, yytext()); }
+<YYINITIAL> {chaine} 	{ return symbol(CodesLexicaux.cste_chaine, yytext()); }
 <YYINITIAL> {idf} 		{ return symbol(CodesLexicaux.idf, yytext()); }
 <YYINITIAL> "+" 	 	{ return symbol(CodesLexicaux.plus); }
 <YYINITIAL> "-" 	 	{ return symbol(CodesLexicaux.moins); }
@@ -62,8 +61,8 @@ LineTerminator= \r|\n|\r\n
 <YYINITIAL> ";" 		{ return symbol(CodesLexicaux.pointvirgule); }
 <YYINITIAL> "," 		{ return symbol(CodesLexicaux.virgule); }
 
-
 <YYINITIAL>	 "//"		{ yybegin(Commentaire) ; }
 <Commentaire>{LineTerminator}	 { yybegin(YYINITIAL) ; }
-. 					 	{}
-\n 					 	{}
+
+<YYINITIAL> \s			{}
+<YYINITIAL> .	{ throw new LexicalException(yyline, yytext());}

@@ -1,7 +1,7 @@
 package plic.arbre;
 
 import plic.arbre.tds.Tds;
-import plic.exception.PasDeDeclarationException;
+import plic.exception.semantique.PasDeDeclarationException;
 
 public class Classe {
 	
@@ -17,6 +17,7 @@ public class Classe {
 		StringBuilder res = new StringBuilder();
 		if(this.listeDeclaration != null){
 			res.append(Tds.getInstance().generer());
+			res.append(listeDeclaration.generer());
 		}else{
 			res.append("");
 		}

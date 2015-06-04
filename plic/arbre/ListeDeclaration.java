@@ -3,7 +3,7 @@ package plic.arbre;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import plic.exception.PasDeDeclarationException;
+import plic.exception.semantique.PasDeDeclarationException;
 
 public class ListeDeclaration implements Iterable<Declaration>{
 	
@@ -23,11 +23,13 @@ public class ListeDeclaration implements Iterable<Declaration>{
 		strbr.append("	la $s7,($sp) \n\n");
 		strbr.append("\n# zone programme\n");;
 		for(Declaration decl : listeDeclaration)
-			try {
-				strbr.append(decl.generer()+"\n");
-			} catch (PasDeDeclarationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(decl instanceof DeclarationConstantes){
+				try {
+					strbr.append(decl.generer()+"\n");
+				} catch (PasDeDeclarationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		return strbr.toString();
 	}

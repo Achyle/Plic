@@ -5,8 +5,8 @@ import java.util.Set;
 
 import plic.arbre.DeclarationChamps.Statut;
 import plic.arbre.DeclarationChamps.Type;
-import plic.exception.DoubleDeclarationException;
-import plic.exception.PasDeDeclarationException;
+import plic.exception.semantique.DoubleDeclarationException;
+import plic.exception.semantique.PasDeDeclarationException;
 
 public class Tds {
 	

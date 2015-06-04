@@ -1,6 +1,6 @@
 package plic.arbre.expression;
 
-import plic.exception.TypeIncompatibleException;
+import plic.exception.semantique.TypeIncompatibleException;
 
 public class Egale extends Binaire{
 	

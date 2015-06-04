@@ -1,7 +1,7 @@
 package plic.arbre;
 
 import plic.arbre.tds.Tds;
-import plic.exception.DoubleDeclarationException;
+import plic.exception.semantique.DoubleDeclarationException;
 
 public class DeclarationChamps extends Declaration{
 	

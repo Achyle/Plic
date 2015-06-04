@@ -1,7 +1,7 @@
 package plic.arbre;
 
 import plic.arbre.tds.Tds;
-import plic.exception.PasDeDeclarationException;
+import plic.exception.semantique.PasDeDeclarationException;
 
 public class EcrireIdentifiant extends DeclarationConstantes{
 

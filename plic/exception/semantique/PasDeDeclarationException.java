@@ -1,4 +1,4 @@
-package plic.exception;
+package plic.exception.semantique;
 
 public class PasDeDeclarationException extends Exception{
 	

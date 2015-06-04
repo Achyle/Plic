@@ -1,7 +1,7 @@
 package plic.arbre;
 
 import plic.arbre.expression.Expression;
-import plic.exception.PasDeDeclarationException;
+import plic.exception.semantique.PasDeDeclarationException;
 	
 public abstract class DeclarationConstantes extends Declaration{
 	public static int cptEtiquette = 0;
