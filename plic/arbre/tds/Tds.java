@@ -1,7 +1,6 @@
 package plic.arbre.tds;
 
 import java.util.HashMap;
-import java.util.Set;
 
 import plic.arbre.DeclarationChamps.Statut;
 import plic.arbre.DeclarationChamps.Type;
@@ -23,6 +22,14 @@ public class Tds {
 		return instance ;
 	}
 	
+	public HashMap<String, Symbole> getTds() {
+		return tds;
+	}
+
+	public void setTds(HashMap<String, Symbole> tds) {
+		this.tds = tds;
+	}
+
 	public void ajouterChamp(Statut statut, Type type, String idf) throws DoubleDeclarationException{
 		// si la variable est deja declarée lance une exception 
 		if (tds.containsKey(idf)){
@@ -41,16 +48,6 @@ public class Tds {
 		return tds.get(key);
 	}
 
-	public Object generer() throws PasDeDeclarationException {
-		// TODO Auto-generated method stub
-		StringBuilder rep = new StringBuilder();
-		Set<String> cles = tds.keySet();
-		for (String cle : cles) {
-			rep.append("	lw $v0,"+ Tds.getInstance().identifier(cle).getDeplacement()+"($s7)\n");
-			rep.append("	sw $v0,($sp)\n");
-			rep.append("	add $sp ,$sp,-4\n");
-		}
-		return rep.toString();
-	}
+	
 
 }

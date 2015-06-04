@@ -2,6 +2,7 @@ package plic.arbre;
 
 import java.util.ArrayList;
 
+import plic.arbre.tds.Tds;
 import plic.exception.semantique.PasDeDeclarationException;
 
 public class ArbreAbstrait {
@@ -13,8 +14,15 @@ public class ArbreAbstrait {
 		arbre.add(c);
 	}
 	
-	public String generer() throws PasDeDeclarationException{
+	public String generer() throws PasDeDeclarationException{		
 		StringBuilder strbr = new StringBuilder();
+		strbr.append("# zone de reservation de memoire\n\n");
+		strbr.append("	# initialise s7 avec sp \n"); 
+		strbr.append("	la $s7,($sp) \n\n");
+		for(int i=0;i<Tds.getInstance().getTds().size();i++){	
+			strbr.append("	add $sp ,$sp,-4 \n");
+		}
+		strbr.append("\n# zone programme\n");;
 		for(Classe c : arbre) strbr.append(c.generer() +"\n");
 		return strbr.toString();
 	}
