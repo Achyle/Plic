@@ -211,7 +211,7 @@ EXP ::= cste_ent:cste
 	:}
 	| bool:b
 	{: 
-		RESULT = new Unaire(b=="vrai"?1:0,true); 
+		RESULT = new Unaire(b,true); 
 	:}
 	| idf:i
 	{:

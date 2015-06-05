@@ -24,7 +24,10 @@ public class Soustraction extends Binaire{
 		           "	sw $v0,($sp)\n" +
 		           "	add $sp,$sp,-4\n";
 		}else{
-			rep = "";
+			rep = "	# additionne "+this.toString()+"\n"+
+					   "	li $v0,"+this.valeur()+"\n" +
+			           "	sw $v0,($sp)\n" +
+			           "	add $sp,$sp,-4\n";	
 		}
 		return rep;
 	}
@@ -32,7 +35,10 @@ public class Soustraction extends Binaire{
 	@Override
 	public int valeur() {
 		// TODO Auto-generated method stub
-		return this.gauche.valeur() - this.droite.valeur();
+		if(type == TypeExpression.BOOLEAN)
+			return tableVeriter();
+		else
+			return this.gauche.valeur() - this.droite.valeur();
 	}
 	
 	public String toString(){

@@ -35,5 +35,5 @@ endif
 java -jar plic1.jar $argument1  /tmp/$nomFichier
 
 #ouvrir mars et executer le fichier de sortie.
-set MARSPATH = "/opt/depot/compilation/Mars4_5.jar"
+#set MARSPATH = "/opt/depot/compilation/Mars4_5.jar"
 java -jar $MARSPATH /tmp/$nomFichier.asm

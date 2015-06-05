@@ -1,6 +1,7 @@
 package plic.arbre;
 
 import plic.arbre.expression.Expression;
+import plic.arbre.expression.Expression.TypeExpression;
 import plic.exception.semantique.PasDeDeclarationException;
 
 public class EcrireExpression extends DeclarationConstantes{
@@ -13,7 +14,10 @@ public class EcrireExpression extends DeclarationConstantes{
 	
 	public String generer() throws PasDeDeclarationException {
 		StringBuilder ecrire = new StringBuilder();
-		ecrire.append("	# Ecrire "+expression.valeur()+"\n");
+		if(expression.type == TypeExpression.BOOLEAN)
+			ecrire.append("	# Ecrire "+(expression.valeur()==1?"vrai":"faux")+"\n");
+		else
+			ecrire.append("	# Ecrire "+expression.valeur()+"\n");	
 		ecrire.append(	expression.generer()+"\n");
 		ecrire.append("	add $sp,$sp,4 \n");
 		ecrire.append("	li $v0, 1 \n");

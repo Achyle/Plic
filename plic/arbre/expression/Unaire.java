@@ -7,13 +7,20 @@ import plic.exception.semantique.PasDeDeclarationException;
 public class Unaire extends Expression {
 
 	private int valeur;
-	private String idf;
+	private String idf, bool;
 	private boolean entier = true;
 	
 	public Unaire(int val,boolean isBoolean){
 		this.valeur = val;
-		type = isBoolean?TypeExpression.BOOLEAN:TypeExpression.ARITHMETIQUE;
+		type = TypeExpression.ARITHMETIQUE;
 		entier = true;
+	}
+	
+	public Unaire(String val,boolean isBoolean){
+		this.bool = val;
+		type = TypeExpression.BOOLEAN;
+		entier = true;
+		this.valeur = (bool.equals("vrai"))?1:0;
 	}
 
 	public Unaire(String i) throws PasDeDeclarationException {
