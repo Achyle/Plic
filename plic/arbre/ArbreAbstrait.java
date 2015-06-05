@@ -22,7 +22,10 @@ public class ArbreAbstrait {
 		for(int i=0;i<Tds.getInstance().getTds().size();i++){	
 			strbr.append("	add $sp ,$sp,-4 \n");
 		}
-		strbr.append("\n# zone programme\n");;
+		strbr.append("\n# zone programme\n");
+		strbr.append(".data\n");
+		strbr.append("space: .asciiz \"\\n\"\n");
+		strbr.append(".text\n");
 		for(Classe c : arbre) strbr.append(c.generer() +"\n");
 		return strbr.toString();
 	}

@@ -183,8 +183,7 @@ public class Plic {
 			
 			pw.close();
 			 
-			System.out.println("COMPILATION OK\n");
-			System.out.println("Le fichier " + fichierDestination+".asm" + " a été generé");
+			System.out.println("COMPILATION OK");
 		} catch(FileNotFoundException ex){// retourne erreur lorsque le fichier destination est incorrect
 			System.out.println(ex.toString());
 		} catch (Exception ex) {

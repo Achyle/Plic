@@ -35,11 +35,14 @@ public class EcrireChaine extends DeclarationConstantes{
 		StringBuilder ecrire = new StringBuilder(); 
 		ecrire.append("	# Ecrirechaine\n");
 		ecrire.append("	.data \n");
-		ecrire.append("	stri"+cpt+": .asciiz " + chaine +"\n");
+		ecrire.append("	stri"+cpt+": .asciiz \"" + chaine +"\"\n");
 		ecrire.append("	.text \n");
 		ecrire.append("	li $v0, 4 \n");
 		ecrire.append("	la $a0, stri"+ cpt +"\n");
+		ecrire.append("	syscall\n") ;
+		ecrire.append("	la $a0, space\n");
 		ecrire.append("	syscall\n\n") ;
+		
 		 
 		return ecrire.toString() ;
 	}
