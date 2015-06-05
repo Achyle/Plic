@@ -1,6 +1,5 @@
 package plic.arbre.expression;
 
-import plic.arbre.expression.Expression.TypeExpression;
 import plic.exception.semantique.PasDeDeclarationException;
 import plic.exception.semantique.TypeIncompatibleException;
 
