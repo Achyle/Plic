@@ -14,7 +14,7 @@ public class EcrireExpression extends DeclarationConstantes{
 	
 	public String generer() throws PasDeDeclarationException {
 		StringBuilder ecrire = new StringBuilder();
-		ecrire.append("	# Ecrire "+expression.generer()+"\n");
+		ecrire.append("	# Ecrire "+expression.valeur()+"\n");
 		ecrire.append(	expression.generer()+"\n");
 		ecrire.append("	li $v0, 1 \n");
 		ecrire.append("	lw $a0,($sp) \n");
