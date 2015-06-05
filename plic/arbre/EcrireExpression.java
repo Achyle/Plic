@@ -15,6 +15,7 @@ public class EcrireExpression extends DeclarationConstantes{
 		StringBuilder ecrire = new StringBuilder();
 		ecrire.append("	# Ecrire "+expression.valeur()+"\n");
 		ecrire.append(	expression.generer()+"\n");
+		ecrire.append("	add $sp,$sp,4 \n");
 		ecrire.append("	li $v0, 1 \n");
 		ecrire.append("	lw $a0,($sp) \n");
 		ecrire.append("	syscall\n\n");
