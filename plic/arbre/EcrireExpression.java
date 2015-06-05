@@ -22,7 +22,10 @@ public class EcrireExpression extends DeclarationConstantes{
 		ecrire.append("	add $sp,$sp,4 \n");
 		ecrire.append("	li $v0, 1 \n");
 		ecrire.append("	lw $a0,($sp) \n");
-		ecrire.append("	syscall\n\n");
+		ecrire.append("	syscall\n");
+		ecrire.append("	li $v0, 4 \n");
+		ecrire.append("	la $a0, space\n");
+		ecrire.append("	syscall\n\n") ;
 				
 		return ecrire.toString() ;
 	}
