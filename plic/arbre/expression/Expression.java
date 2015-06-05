@@ -11,5 +11,5 @@ public abstract class Expression {
 		Expression.cptEtiquette++;
 	}
 	public enum TypeExpression {BOOLEAN, ARITHMETIQUE};
-	protected TypeExpression type;
+	public TypeExpression type;
 }

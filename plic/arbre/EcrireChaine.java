@@ -10,6 +10,7 @@ public class EcrireChaine extends DeclarationConstantes{
 	public EcrireChaine(String chaine) {
 		super();
 		this.chaine = chaine;
+		chaine = chaine.replaceAll("\"\"" ,"\\\\\"");
 	}
 
 	public String generer() {

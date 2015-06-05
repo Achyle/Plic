@@ -3,16 +3,20 @@ package plic.arbre;
 import plic.arbre.expression.Expression;
 import plic.arbre.tds.Tds;
 import plic.exception.semantique.PasDeDeclarationException;
+import plic.exception.semantique.TypeIncompatibleException;
 
 public class Affectation extends DeclarationConstantes{
 
 	private String idf;
 	private Expression e;
 	
-	public Affectation(String idf, Expression e) {
+	public Affectation(String idf, Expression e) throws TypeIncompatibleException {
 		super();
 		this.idf = idf;
 		this.e = e;
+		if(e.type.equals(Expression.TypeExpression.BOOLEAN)){
+			throw new TypeIncompatibleException();
+		}
 	}
 	
 	public String generer() throws PasDeDeclarationException{
