@@ -17,6 +17,7 @@ import plic.arbre.expression.Egale;
 import plic.arbre.expression.Expression;
 import plic.arbre.expression.Inferieur;
 import plic.arbre.expression.Multiplication;
+import plic.arbre.expression.Opposer;
 import plic.arbre.expression.Somme;
 import plic.arbre.expression.Soustraction;
 import plic.arbre.expression.Superieur;
@@ -112,10 +113,6 @@ DECLARATION ::= DECL_CHAMP:d pointvirgule
 	{: 
 		Plic.derniereGrammaire = "DECLARATION CONST";
 		RESULT = d; 
-	:}
-	| DECL_CHAMP:d error
-	{:
-		System.out.println("On a catcher qui manquer un pointvirgule");
 	:};
 	
 DECL_CHAMP ::= statut:s type:t LIDF:l 
@@ -173,7 +170,6 @@ INSTECRIRE ::= ecrire EXP:e
 	:}
 	| ecrire cste_chaine:c
 	{:
-		System.out.println(c);
 		Plic.derniereGrammaire = "INSTECRIRE CONSTCHAINE";
 		RESULT = new EcrireChaine(c); 
 	:};
@@ -191,7 +187,7 @@ EXP ::= cste_ent:cste
 	| moins EXP:e
 	{: 
 		Plic.derniereGrammaire = "-EXP";
-		RESULT = new Multiplication(new Unaire(-1,false),e); 
+		RESULT = new Opposer(e); 
 	:}
 	| EXP:e1 plus EXP:e2
 	{: 

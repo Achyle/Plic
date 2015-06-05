@@ -24,7 +24,7 @@ public class Plic {
 		fichierDestination = fr;
 	}
 	
-	public void setLigne(int ligne){
+	public static void setLigne(int ligne){
 		Plic.ligne = ligne;
 	}
 	

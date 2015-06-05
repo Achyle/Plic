@@ -9,8 +9,24 @@ public class EcrireChaine extends DeclarationConstantes{
 
 	public EcrireChaine(String chaine) {
 		super();
-		this.chaine = chaine;
-		chaine = chaine.replaceAll("\"\"" ,"\\\\\"");
+		this.chaine = convertirCote(chaine);
+	}
+
+	private String convertirCote(String chaine2) {
+		chaine2 = chaine2.substring(1, chaine2.length()-1);
+		StringBuilder sb = new StringBuilder();
+		boolean first = false;
+		for(int i = 0; i < chaine2.length(); i++){
+			char c = chaine2.charAt(i);
+			if(c == '"'){
+				first = !first;
+				if(!first)
+					sb.append('"');
+			}else{
+				sb.append(c);
+			}
+		}
+		return sb.toString();
 	}
 
 	public String generer() {
