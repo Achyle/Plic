@@ -39,11 +39,12 @@ parser code {:
     }
 
     public void report_fatal_error(String message, Object info) {
+    	
     	String mess = "";
         if (info instanceof java_cup.runtime.Symbol) {
             java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
             if (s.left >= 0) {                
-                mess = "ERREUR SYNTAXIQUE : ligne "+(s.left+1);
+                mess = "ERREUR SYNTAXIQUE : ligne "+(s.left+1)+" : Mauvais usage "+Plic.getTokensString()+"\nusage(s) possible(s) : \n"+Plic.getAllUsageWithTokens();
             }
         }
 		System.out.println(mess);
@@ -75,61 +76,58 @@ start with SYSTEME;
 
 SYSTEME	::= CLASSE:c
 	{: 
-		Plic.derniereGrammaire = "SYSTEME";
+		Plic.derniereGrammaire = "declaration de classe";
 		RESULT = new ArbreAbstrait(c); 
 	:};
 	
 CLASSE ::= classe idf:i LDECL:l fin
 	{: 
-		Plic.derniereGrammaire = "CLASSE";
 		RESULT = new Classe(l,i); 
 	:}
 	| classe idf:i fin
 	{: 
-		Plic.derniereGrammaire = "CLASSE VIDE";
 		RESULT = new Classe(null,i); 
 	:};
 
 LDECL ::= LDECL:l DECLARATION:d
 	{: 	
-		Plic.derniereGrammaire = "LDECL ADD";
+		Plic.clearTokens();
+		Plic.derniereGrammaire = "Probleme de declaration";
 		l.ajouterDeclaration(d);
 		RESULT = l; 
 	:}
 	| DECLARATION:d
 	{: 	
-		Plic.derniereGrammaire = "LDECL NEW";
-		ListeDeclaration l = new ListeDeclaration(); 
+		Plic.clearTokens();
+		Plic.derniereGrammaire = "Probleme de declaration";
+		ListeDeclaration l = new ListeDeclaration();
 		l.ajouterDeclaration(d);
 		RESULT = l; 
 	:};
 	
 DECLARATION ::= DECL_CHAMP:d pointvirgule
 	{: 
-		Plic.derniereGrammaire = "DECLARATION CHAMP";
+		Plic.derniereGrammaire = "Declaration champ pas bonne";
 		RESULT = d; 
 	:}
 	| DECL_CONST:d pointvirgule
 	{: 
-		Plic.derniereGrammaire = "DECLARATION CONST";
+		Plic.derniereGrammaire = "Declaration constante pas bonne";
 		RESULT = d; 
 	:};
 	
 DECL_CHAMP ::= statut:s type:t LIDF:l 
 	{: 
-		Plic.derniereGrammaire = "DECL_CHAMP";
 		RESULT = new DeclarationChamps(s,t,l); 
 	:};
 
 LIDF ::= LIDF:l virgule idf:i
 	{: 	
-		Plic.derniereGrammaire = "LIDF ADD";
 		l.ajouterIdentifiant(i);
 		RESULT = l; 
 	:}
 	| idf:i
 	{: 	
-		Plic.derniereGrammaire = "LIDF NEW";
 		ListeIdentifiant l = new ListeIdentifiant();
 		l.ajouterIdentifiant(i);
 		RESULT = l; 
@@ -137,105 +135,85 @@ LIDF ::= LIDF:l virgule idf:i
 	
 DECL_CONST ::= AFFECT:a
 	{: 
-		Plic.derniereGrammaire = "DECL_CONST AFFECT";
 		RESULT = a; 
 	:}
 	| INSTLIRE:i
 	{: 
-		Plic.derniereGrammaire = "DECL_CONST INSTLIRE";
 		RESULT = i; 
 	:}
 	| INSTECRIRE:i
 	{: 
-		Plic.derniereGrammaire = "DECL_CONST INSTECRIRE";
 		RESULT = i; 
 	:};
 	
 AFFECT ::=  idf:i egale EXP:e 
 	{: 
-		Plic.derniereGrammaire = "AFFECT EXP";
 		RESULT = new Affectation(i,e); 
 	:};
 	
 INSTLIRE ::= lire idf:i
 	{: 
-		Plic.derniereGrammaire = "INSTLIRE";
 		RESULT = new Lire(i); 
 	:};
 
 INSTECRIRE ::= ecrire EXP:e
 	{: 
-		Plic.derniereGrammaire = "INSTECRIRE EXP";
 		RESULT = new EcrireExpression(e); 
 	:}
 	| ecrire cste_chaine:c
 	{:
-		Plic.derniereGrammaire = "INSTECRIRE CONSTCHAINE";
 		RESULT = new EcrireChaine(c); 
 	:};
 
 EXP ::= cste_ent:cste
 	{: 
-		Plic.derniereGrammaire = "EXP CONST ENT";
 		RESULT = new Unaire(Integer.parseInt(""+cste),false); 
 	:}
 	| parenthese_ouvert EXP:e parenthese_fermer
 	{: 
-		Plic.derniereGrammaire = "(EXP)";
 		RESULT = e; 
 	:}
 	| moins EXP:e
 	{: 
-		Plic.derniereGrammaire = "-EXP";
 		RESULT = new Opposer(e); 
 	:}
 	| EXP:e1 plus EXP:e2
 	{: 
-		Plic.derniereGrammaire = "EXP + EXP";
 	  	RESULT = new Somme(e1,e2); 
 	:}
 	| EXP:e1 moins EXP:e2
 	{: 
-		Plic.derniereGrammaire = "EXP - EXP";
 		RESULT = new Soustraction(e1,e2); 
 	:}
 	| EXP:e1 fois EXP:e2
 	{: 
-		Plic.derniereGrammaire = "EXP * EXP";
 		RESULT = new Multiplication(e1,e2); 
 	:}
 	| EXP:e1 diviser EXP:e2
 	{: 
-		Plic.derniereGrammaire = "EXP / EXP";
 		RESULT = new Division(e1,e2); 
 	:}
 	| EXP:e1 inf EXP:e2
 	{: 
-		Plic.derniereGrammaire = "EXP < EXP";
 		RESULT=new Inferieur(e1,e2); 
 	:}
 	| EXP:e1 sup EXP:e2
 	{: 
-		Plic.derniereGrammaire = "EXP > EXP";
 		RESULT=new Superieur(e1,e2); 
 	:}
 	| EXP:e1 test_egale EXP:e2
 	{: 
-		Plic.derniereGrammaire = "EXP == EXP";
 		RESULT=new Egale(e1,e2); 
 	:}
 	| EXP:e1 test_different EXP:e2
 	{: 
-		Plic.derniereGrammaire = "EXP != EXP";
 		RESULT=new Different(e1,e2); 
 	:}
 	| bool:b
 	{: 
-		Plic.derniereGrammaire = "EXP BOOL";
 		RESULT = new Unaire(b=="vrai"?1:0,true); 
 	:}
 	| idf:i
 	{:
-		Plic.derniereGrammaire = "EXP IDF";
 		RESULT = new Unaire(i);	
 	:};

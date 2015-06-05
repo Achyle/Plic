@@ -678,15 +678,15 @@ public class AnalyseurLexical implements java_cup.runtime.Scanner {
             }
           case 27: break;
           case 2: 
-            { Plic.setLigne(yyline); return symbol(CodesLexicaux.cste_ent, yytext());
+            { Plic.addToken("{entier}"); Plic.setLigne(yyline); return symbol(CodesLexicaux.cste_ent, yytext());
             }
           case 28: break;
           case 3: 
-            { Plic.setLigne(yyline); return symbol(CodesLexicaux.idf, yytext());
+            { Plic.addToken("{idf}"); Plic.setLigne(yyline); return symbol(CodesLexicaux.idf, yytext());
             }
           case 29: break;
           case 4: 
-            { Plic.setLigne(yyline); return symbol(CodesLexicaux.diviser);
+            { Plic.addToken("/"); Plic.setLigne(yyline); return symbol(CodesLexicaux.diviser);
             }
           case 30: break;
           case 5: 
@@ -694,47 +694,47 @@ public class AnalyseurLexical implements java_cup.runtime.Scanner {
             }
           case 31: break;
           case 6: 
-            { Plic.setLigne(yyline); return symbol(CodesLexicaux.plus);
+            { Plic.addToken("+"); Plic.setLigne(yyline); return symbol(CodesLexicaux.plus);
             }
           case 32: break;
           case 7: 
-            { Plic.setLigne(yyline); return symbol(CodesLexicaux.moins);
+            { Plic.addToken("-"); Plic.setLigne(yyline); return symbol(CodesLexicaux.moins);
             }
           case 33: break;
           case 8: 
-            { Plic.setLigne(yyline); return symbol(CodesLexicaux.fois);
+            { Plic.addToken("*"); Plic.setLigne(yyline); return symbol(CodesLexicaux.fois);
             }
           case 34: break;
           case 9: 
-            { Plic.setLigne(yyline); return symbol(CodesLexicaux.inf);
+            { Plic.addToken("<"); Plic.setLigne(yyline); return symbol(CodesLexicaux.inf);
             }
           case 35: break;
           case 10: 
-            { Plic.setLigne(yyline); return symbol(CodesLexicaux.sup);
+            { Plic.addToken(">"); Plic.setLigne(yyline); return symbol(CodesLexicaux.sup);
             }
           case 36: break;
           case 11: 
-            { Plic.setLigne(yyline); return symbol(CodesLexicaux.egale);
+            { Plic.addToken("="); Plic.setLigne(yyline); return symbol(CodesLexicaux.egale);
             }
           case 37: break;
           case 12: 
-            { Plic.setLigne(yyline); return symbol(CodesLexicaux.parenthese_ouvert);
+            { Plic.addToken("("); Plic.setLigne(yyline); return symbol(CodesLexicaux.parenthese_ouvert);
             }
           case 38: break;
           case 13: 
-            { Plic.setLigne(yyline); return symbol(CodesLexicaux.parenthese_fermer);
+            { Plic.addToken(")"); Plic.setLigne(yyline); return symbol(CodesLexicaux.parenthese_fermer);
             }
           case 39: break;
           case 14: 
-            { Plic.setLigne(yyline); return symbol(CodesLexicaux.pointvirgule);
+            { Plic.addToken(";"); Plic.setLigne(yyline); return symbol(CodesLexicaux.pointvirgule);
             }
           case 40: break;
           case 15: 
-            { Plic.setLigne(yyline); return symbol(CodesLexicaux.virgule);
+            { Plic.addToken(","); Plic.setLigne(yyline); return symbol(CodesLexicaux.virgule);
             }
           case 41: break;
           case 16: 
-            { Plic.setLigne(yyline); return symbol(CodesLexicaux.cste_chaine, yytext());
+            { Plic.addToken("{chaine}"); Plic.setLigne(yyline); return symbol(CodesLexicaux.cste_chaine, yytext());
             }
           case 42: break;
           case 17: 
@@ -742,39 +742,39 @@ public class AnalyseurLexical implements java_cup.runtime.Scanner {
             }
           case 43: break;
           case 18: 
-            { Plic.setLigne(yyline); return symbol(CodesLexicaux.test_egale);
+            { Plic.addToken("=="); Plic.setLigne(yyline); return symbol(CodesLexicaux.test_egale);
             }
           case 44: break;
           case 19: 
-            { Plic.setLigne(yyline); return symbol(CodesLexicaux.test_different);
+            { Plic.addToken("!="); Plic.setLigne(yyline); return symbol(CodesLexicaux.test_different);
             }
           case 45: break;
           case 20: 
-            { Plic.setLigne(yyline); return symbol(CodesLexicaux.fin);
+            { Plic.addToken("fin"); Plic.setLigne(yyline); return symbol(CodesLexicaux.fin);
             }
           case 46: break;
           case 21: 
-            { Plic.setLigne(yyline); return symbol(CodesLexicaux.bool, yytext());
+            { Plic.addToken("{bool}"); Plic.setLigne(yyline); return symbol(CodesLexicaux.bool, yytext());
             }
           case 47: break;
           case 22: 
-            { Plic.setLigne(yyline); return symbol(CodesLexicaux.lire);
+            { Plic.addToken("lire"); Plic.setLigne(yyline); return symbol(CodesLexicaux.lire);
             }
           case 48: break;
           case 23: 
-            { Plic.setLigne(yyline); return symbol(CodesLexicaux.statut, yytext());
+            { Plic.addToken("{statut}"); Plic.setLigne(yyline); return symbol(CodesLexicaux.statut, yytext());
             }
           case 49: break;
           case 24: 
-            { Plic.setLigne(yyline); return symbol(CodesLexicaux.type, yytext());
+            { Plic.addToken("{type}"); Plic.setLigne(yyline); return symbol(CodesLexicaux.type, yytext());
             }
           case 50: break;
           case 25: 
-            { Plic.setLigne(yyline); return symbol(CodesLexicaux.ecrire);
+            { Plic.addToken("ecrire"); Plic.setLigne(yyline); return symbol(CodesLexicaux.ecrire);
             }
           case 51: break;
           case 26: 
-            { Plic.setLigne(yyline); return symbol(CodesLexicaux.classe);
+            { Plic.addToken("classe"); Plic.setLigne(yyline); return symbol(CodesLexicaux.classe);
             }
           case 52: break;
           default:
