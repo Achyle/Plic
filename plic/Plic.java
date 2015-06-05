@@ -13,6 +13,7 @@ import plic.arbre.ArbreAbstrait;
 
 public class Plic {
 	
+	public static int ligne = 0;
 	private String fichierSource;
 	private String fichierDestination;
 	
@@ -21,6 +22,10 @@ public class Plic {
 	public Plic(String fs,String fr ){
 		fichierSource = fs;
 		fichierDestination = fr;
+	}
+	
+	public void setLigne(int ligne){
+		Plic.ligne = ligne;
 	}
 	
 	@SuppressWarnings({ "deprecation" })
