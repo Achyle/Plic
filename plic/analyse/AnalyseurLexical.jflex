@@ -2,6 +2,7 @@ package plic.analyse ;
 
 import java_cup.runtime.*;
 import plic.exception.lexical.LexicalException;
+import plic.Plic;
 
 %%
 
@@ -33,35 +34,35 @@ bool = vrai | faux
 idf = [a-zA-Z][a-zA-Z0-9]*
 statut = publique | privee
 type = entier|booleen
-chaine = \"[^;]*\"
+chaine = \"([^[\"]]|([\"]{2}))*\"
 commentaireSlashSlash = [/][/].*
 
 %%
 
 {commentaireSlashSlash}	{}
-"classe" 	{ return symbol(CodesLexicaux.classe); }
-"ecrire" 	{ return symbol(CodesLexicaux.ecrire); }
-"lire" 		{ return symbol(CodesLexicaux.lire); }
-"fin" 		{ return symbol(CodesLexicaux.fin); }
-{entier} 	{ return symbol(CodesLexicaux.cste_ent, yytext()); }
-{statut} 	{ return symbol(CodesLexicaux.statut, yytext()); }
-{type} 		{ return symbol(CodesLexicaux.type, yytext()); }
-{bool} 		{ return symbol(CodesLexicaux.bool, yytext()); }
-{chaine} 	{ return symbol(CodesLexicaux.cste_chaine, yytext()); }
-{idf} 		{ return symbol(CodesLexicaux.idf, yytext()); }
-"+" 	 	{ return symbol(CodesLexicaux.plus); }
-"-" 	 	{ return symbol(CodesLexicaux.moins); }
-"*" 	 	{ return symbol(CodesLexicaux.fois); }
-"/"			{ return symbol(CodesLexicaux.diviser); }
-"<" 	 	{ return symbol(CodesLexicaux.inf); }
-">" 	 	{ return symbol(CodesLexicaux.sup); }
-"==" 	 	{ return symbol(CodesLexicaux.test_egale); }
-"!=" 		{ return symbol(CodesLexicaux.test_different); }
-"=" 	 	{ return symbol(CodesLexicaux.egale); }
-"(" 		{ return symbol(CodesLexicaux.parenthese_ouvert); }
-")" 		{ return symbol(CodesLexicaux.parenthese_fermer); }
-";" 		{ return symbol(CodesLexicaux.pointvirgule); }
-"," 		{ return symbol(CodesLexicaux.virgule); }
+"classe" 	{ Plic.setLigne(yyline); return symbol(CodesLexicaux.classe); }
+"ecrire" 	{ Plic.setLigne(yyline); return symbol(CodesLexicaux.ecrire); }
+"lire" 		{ Plic.setLigne(yyline); return symbol(CodesLexicaux.lire); }
+"fin" 		{ Plic.setLigne(yyline); return symbol(CodesLexicaux.fin); }
+{entier} 	{ Plic.setLigne(yyline); return symbol(CodesLexicaux.cste_ent, yytext()); }
+{statut} 	{ Plic.setLigne(yyline); return symbol(CodesLexicaux.statut, yytext()); }
+{type} 		{ Plic.setLigne(yyline); return symbol(CodesLexicaux.type, yytext()); }
+{bool} 		{ Plic.setLigne(yyline); return symbol(CodesLexicaux.bool, yytext()); }
+{chaine} 	{ Plic.setLigne(yyline); return symbol(CodesLexicaux.cste_chaine, yytext()); }
+{idf} 		{ Plic.setLigne(yyline); return symbol(CodesLexicaux.idf, yytext()); }
+"+" 	 	{ Plic.setLigne(yyline); return symbol(CodesLexicaux.plus); }
+"-" 	 	{ Plic.setLigne(yyline); return symbol(CodesLexicaux.moins); }
+"*" 	 	{ Plic.setLigne(yyline); return symbol(CodesLexicaux.fois); }
+"/"			{ Plic.setLigne(yyline); return symbol(CodesLexicaux.diviser); }
+"<" 	 	{ Plic.setLigne(yyline); return symbol(CodesLexicaux.inf); }
+">" 	 	{ Plic.setLigne(yyline); return symbol(CodesLexicaux.sup); }
+"==" 	 	{ Plic.setLigne(yyline); return symbol(CodesLexicaux.test_egale); }
+"!=" 		{ Plic.setLigne(yyline); return symbol(CodesLexicaux.test_different); }
+"=" 	 	{ Plic.setLigne(yyline); return symbol(CodesLexicaux.egale); }
+"(" 		{ Plic.setLigne(yyline); return symbol(CodesLexicaux.parenthese_ouvert); }
+")" 		{ Plic.setLigne(yyline); return symbol(CodesLexicaux.parenthese_fermer); }
+";" 		{ Plic.setLigne(yyline); return symbol(CodesLexicaux.pointvirgule); }
+"," 		{ Plic.setLigne(yyline); return symbol(CodesLexicaux.virgule); }
 
-\s			{}
+\s			{Plic.setLigne(yyline); }
 .	{ throw new LexicalException(yyline, yytext());}

@@ -173,6 +173,7 @@ INSTECRIRE ::= ecrire EXP:e
 	:}
 	| ecrire cste_chaine:c
 	{:
+		System.out.println(c);
 		Plic.derniereGrammaire = "INSTECRIRE CONSTCHAINE";
 		RESULT = new EcrireChaine(c); 
 	:};
